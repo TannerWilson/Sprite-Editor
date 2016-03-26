@@ -38,3 +38,6 @@ HEADERS  += mainwindow.h \
     gifexport.h
 
 FORMS    += mainwindow.ui
+
+RESOURCES += \
+    resources.qrc
