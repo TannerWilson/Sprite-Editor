@@ -16,7 +16,6 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     model.cpp \
     sprite.cpp \
-    tool.cpp \
     image.cpp \
     layer.cpp \
     vector.cpp \

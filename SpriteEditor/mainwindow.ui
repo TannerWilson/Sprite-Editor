@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="animated">
+   <bool>true</bool>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QWidget" name="toolsContainer" native="true">
     <property name="geometry">
@@ -117,9 +120,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>272</y>
+      <y>381</y>
       <width>104</width>
-      <height>560</height>
+      <height>451</height>
      </rect>
     </property>
     <property name="widgetResizable">
@@ -131,7 +134,7 @@
        <x>0</x>
        <y>0</y>
        <width>102</width>
-       <height>558</height>
+       <height>449</height>
       </rect>
      </property>
     </widget>
@@ -221,6 +224,35 @@ frame</string>
      </rect>
     </property>
    </widget>
+   <widget class="QPushButton" name="secondaryColorButton">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>300</y>
+      <width>61</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="primaryColorButton">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>270</y>
+      <width>61</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -228,7 +260,7 @@ frame</string>
      <x>0</x>
      <y>0</y>
      <width>1200</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
