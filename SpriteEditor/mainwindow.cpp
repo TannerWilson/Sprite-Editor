@@ -1,6 +1,11 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QColorDialog>
+#include <QColor>
+#include <string>
 #include <QDebug>
+
+using namespace std;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -50,4 +55,26 @@ void MainWindow::on_addFrameButton_clicked()
     view->show();
     framesLayout->addWidget(view);
     framesLayout->addStretch(1);
+}
+
+/*
+ * Opens the color picker, saves the selected color, and updates the primary and secondary
+ * color choices
+ */
+void MainWindow::on_primaryColorButton_clicked()
+{
+    // First three params are meaningless... just default. Last param enables transparency option
+    QColor chosenColor = QColorDialog::getColor(Qt::white, 0, QString(), QColorDialog::ShowAlphaChannel);
+
+    // If user selected a color instead of clicking 'cancel'
+    if(chosenColor.isValid())
+    {
+        QString styleInfo = (ui->primaryColorButton->styleSheet());
+        ui->secondaryColorButton->setStyleSheet(ui->primaryColorButton->styleSheet());
+        QString rgbaString = QString("%1, %2, %3, %4").arg(chosenColor.red()).arg(chosenColor.green()).arg(chosenColor.blue()).arg(chosenColor.alpha());
+        qDebug() << rgbaString;
+        ui->primaryColorButton->setStyleSheet(QString("background-color: rgba(%1)").arg(rgbaString));
+
+    }
+
 }

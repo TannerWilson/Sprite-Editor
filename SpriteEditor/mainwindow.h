@@ -26,6 +26,8 @@ private slots:
 
 
 
+    void on_primaryColorButton_clicked();
+
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
