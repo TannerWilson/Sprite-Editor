@@ -8,6 +8,11 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    // Set up stuff for the part of the GUI that allows you to add image frames,
+    // browse image frames, etc.
+    framesLayout = new QVBoxLayout;
+    ui->frameContainer->setLayout(framesLayout);
+
     // Set the primary and secondary color choices
     ui->primaryColorButton->setStyleSheet("background-color: red");
     ui->secondaryColorButton->setStyleSheet("background-color: yellow");
@@ -29,4 +34,18 @@ void MainWindow::on_secondaryColorButton_clicked()
     ui->secondaryColorButton->setStyleSheet(styleInfo);
 
 
+}
+
+// Creates a new, blank image frame for the Sprite, shown on the left of the GUI.
+void MainWindow::on_addFrameButton_clicked()
+{
+    QPen pen(Qt::white, 3, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
+    QBrush brush; // Default brush does not fill in rectangle
+    QGraphicsScene scene;
+    scene.addRect(0,0,individualFrameWidth,individualFrameHeight,pen,brush);
+    QGraphicsView *view = new QGraphicsView(&scene);
+    view->setFixedSize(individualFrameWidth, individualFrameHeight);
+    view->show();
+    framesLayout->addWidget(view);
+    framesLayout->addStretch(1);
 }
