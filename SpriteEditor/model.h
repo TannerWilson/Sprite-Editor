@@ -9,6 +9,8 @@
 
 class Model
 {
+
+private:
     // private data members
     Sprite *selectedSprite;
     Image *selectedImage;

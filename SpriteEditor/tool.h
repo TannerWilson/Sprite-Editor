@@ -5,10 +5,10 @@
 class Tool
 {
 public:
-    virtual void OnClick(int,int) = 0;
-    virtual void OnRelease(int,int) = 0;
-    virtual void OnHover(int,int) = 0;
-    virtual void OnDrag(int,int) = 0;
+    virtual void onClick(int,int) = 0;
+    virtual void onRelease(int,int) = 0;
+    virtual void onHover(int,int) = 0;
+    virtual void onDrag(int,int) = 0;
 };
 
 #endif // TOOL_H

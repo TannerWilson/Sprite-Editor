@@ -24,19 +24,21 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-// Sets the current drawing color to the color displayed on the partially hidden color button.
-// Swaps the colors shown on the primary/secondary button pair.
+/*
+ * Sets the current drawing color to the color displayed on the partially hidden color button.
+ * Swaps the colors shown on the primary/secondary button pair.
+ */
 void MainWindow::on_secondaryColorButton_clicked()
 {
     // Swap the colors shown on the two buttons
     QString styleInfo = (ui->primaryColorButton->styleSheet());
     ui->primaryColorButton->setStyleSheet(ui->secondaryColorButton->styleSheet());
     ui->secondaryColorButton->setStyleSheet(styleInfo);
-
-
 }
 
-// Creates a new, blank image frame for the Sprite, shown on the left of the GUI.
+/*
+ * Creates a new, blank image frame for the Sprite, shown on the left of the GUI.
+ */
 void MainWindow::on_addFrameButton_clicked()
 {
     QPen pen(Qt::white, 3, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);

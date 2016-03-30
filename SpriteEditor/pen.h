@@ -7,10 +7,10 @@ class Pen : public Tool
 {
 public:
     Pen();
-    void OnClick(int,int);
-    void OnRelease(int,int);
-    void OnHover(int,int);
-    void OnDrag(int,int);
+    void onClick(int,int);
+    void onRelease(int,int);
+    void onHover(int,int);
+    void onDrag(int,int);
 };
 
 #endif // PEN_H
