@@ -13,6 +13,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ScreenHeight = 1000;
+    ScreenWidth = 1000;
+
     // Set up stuff for the part of the GUI that allows you to add image frames,
     // browse image frames, etc.
     framesLayout = new QVBoxLayout;
@@ -29,10 +32,10 @@ MainWindow::MainWindow(QWidget *parent) :
     // Set up graphics scene for drawing
     scene = new QGraphicsScene(this);
     // Create model and pass scene pointer so it can draw to the screen.
-    model = new Model(scene,700,700,25);
+    model = new Model(scene,ScreenHeight,ScreenWidth,25);
 
     // TODO Joey Set up what scene size based off image size.
-    scene->setSceneRect(0,0,700,700);
+    scene->setSceneRect(0,0,ScreenHeight,ScreenWidth);
 
     // Create graphics view
     spritegraphicsview = new SpriteGraphicsView();

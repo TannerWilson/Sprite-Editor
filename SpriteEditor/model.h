@@ -32,9 +32,6 @@ private:
 
     void DrawGrid(int height, int width, int unitsize);
 
-
-
-    //QList<QGraphicsRectItem*> pixels;
     QMap<string,QGraphicsRectItem*> pixelmap;
 
 public:

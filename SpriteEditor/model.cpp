@@ -129,7 +129,6 @@ void Model::MouseMove(QPointF point)
 
 void Model::MouseReleased(QPointF point)
 {
-   // qDebug() << "Mouse Released X= " << point.x() << " Y= " << point.y();
 
 }
 

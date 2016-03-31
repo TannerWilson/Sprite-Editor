@@ -31,6 +31,9 @@ private:
     Model* model;
     void DrawGrid(int imageheight,int imagewidth, int unitsize);
 
+    int ScreenWidth;
+    int ScreenHeight;
+
 private slots:
     void on_secondaryColorButton_clicked();
 
