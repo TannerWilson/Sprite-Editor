@@ -38,13 +38,14 @@ private:
     QMap<string,QGraphicsRectItem*> pixelmap;
 
 public:
-    Model(QGraphicsScene* scene);
+    Model(QGraphicsScene* scene, int screenheight, int screenwidth, int unitsize);
     Model();
     void Draw(int x, int y, Vector4 color);
     void DeleteRect(int x, int y);
     void AddLayer();
     void AddImage();
     QPoint GetCellLocation(QPointF point);
+    int unitsize;
 
 public slots:
     void MouseClicked(QPointF point);

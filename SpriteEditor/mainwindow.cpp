@@ -29,10 +29,10 @@ MainWindow::MainWindow(QWidget *parent) :
     // Set up graphics scene for drawing
     scene = new QGraphicsScene(this);
     // Create model and pass scene pointer so it can draw to the screen.
-    model = new Model(scene);
+    model = new Model(scene,700,700,25);
 
     // TODO Joey Set up what scene size based off image size.
-    scene->setSceneRect(0,0,3000,3000);
+    scene->setSceneRect(0,0,700,700);
 
     // Create graphics view
     spritegraphicsview = new SpriteGraphicsView();

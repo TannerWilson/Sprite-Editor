@@ -1,9 +1,10 @@
 #include "model.h"
 
-Model::Model(QGraphicsScene* scene)
+Model::Model(QGraphicsScene* scene,int screenheight,int screenwidth,int unitsize)
 {
+    this->unitsize = unitsize;
     this->scene = scene;
-    DrawGrid(3000,3000,50);
+    DrawGrid(screenheight,screenwidth,unitsize);
 }
 
 // private methods
@@ -35,6 +36,7 @@ void Model::AddImage(){;}
 
 void Model::Draw(int x, int y, Vector4 color)
 {
+
     // Outline
     QPen outlinePen(Qt::black);
     outlinePen.setWidth(2);
@@ -53,7 +55,7 @@ void Model::Draw(int x, int y, Vector4 color)
     if(pixelmap[posstring.str()] == NULL)
     {
         // If so draw it and add it to the map.
-        QGraphicsRectItem* rect = scene->addRect((x-1)*50, (y-1)*50, 50, 50, outlinePen, brush);
+        QGraphicsRectItem* rect = scene->addRect(x*unitsize, y*unitsize, unitsize, unitsize, outlinePen, brush);
         pixelmap[posstring.str()] = rect;
     }
     else // Or just update the old pixel.
@@ -76,39 +78,39 @@ QPoint Model::GetCellLocation(QPointF point)
     float mousex = point.x();
     float mousey = point.y();
 
-    if(mousex < 50 && mousex > 0)
-        returnpoint.setX(1);
+    if(mousex < unitsize && mousex > 0)
+        returnpoint.setX(0);
     else
     {
         int countx = 0;
-        while(mousex >= 50)
+        while(mousex >= unitsize)
         {
 
-            mousex -= 50;
+            mousex -= unitsize;
             countx++;
         }
 
         if(mousex > 0)
             countx++;
 
-        returnpoint.setX(countx);
+        returnpoint.setX(countx-1);
     }
 
-    if(mousey < 50 && mousey > 0)
-        returnpoint.setY(1);
+    if(mousey < unitsize && mousey > 0)
+        returnpoint.setY(0);
     else
     {
         int county = 0;
-        while(mousey >= 50)
+        while(mousey >= unitsize)
         {
-            mousey -= 50;
+            mousey -= unitsize;
             county++;
         }
 
         if(mousey > 0)
             county++;
 
-        returnpoint.setY(county);
+        returnpoint.setY(county-1);
     }
     return returnpoint;
 
