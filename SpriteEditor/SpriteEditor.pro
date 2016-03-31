@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     pen.cpp \
     eraser.cpp \
     bucket.cpp \
-    gifexport.cpp
+    gifexport.cpp \
+    spritegraphicsview.cpp
 
 HEADERS  += mainwindow.h \
     model.h \
@@ -34,7 +35,8 @@ HEADERS  += mainwindow.h \
     pen.h \
     eraser.h \
     bucket.h \
-    gifexport.h
+    gifexport.h \
+    spritegraphicsview.h
 
 FORMS    += mainwindow.ui
 

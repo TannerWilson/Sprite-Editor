@@ -2,10 +2,15 @@
 #define VECTOR_H
 
 
-class Vector
+class Vector4
 {
 public:
-    Vector();
+    Vector4(int r, int g, int b, int a);
+    Vector4();
+    int r;
+    int g;
+    int b;
+    int a;
 };
 
 #endif // VECTOR_H

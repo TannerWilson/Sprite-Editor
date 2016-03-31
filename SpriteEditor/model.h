@@ -6,6 +6,7 @@
 #include "layer.h"
 #include "tool.h"
 #include "vector.h"
+#include <QGraphicsScene>
 
 class Model
 {
@@ -17,14 +18,20 @@ private:
     Layer *selectedLayer;
     Tool *currentTool;
 
+    QGraphicsScene* scene;
+
     // private methods
     void Save(Sprite);
     void Export(Sprite);
     void UpdateGUI();
 
+    void DrawGrid(int height, int width, int unitsize);
+    void DrawRectToScreen(float x, float y, float height, float width, Vector4 color);
+
 public:
+    Model(QGraphicsScene* scene);
     Model();
-    void Draw(int, int, Vector);
+    void Draw(int, int, Vector4);
     void MouseClicked(int, int);
     void MouseReleased(int, int);
     void AddLayer();

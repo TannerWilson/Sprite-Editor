@@ -18,9 +18,38 @@ MainWindow::MainWindow(QWidget *parent) :
     framesLayout = new QVBoxLayout;
     ui->frameContainer->setLayout(framesLayout);
 
+    // Set up box layout for graphics frame
+    graphicslayout = new QVBoxLayout;
+    ui->graphicsframe->setLayout(graphicslayout);
+
     // Set the primary and secondary color choices
     ui->primaryColorButton->setStyleSheet("background-color: red");
     ui->secondaryColorButton->setStyleSheet("background-color: yellow");
+
+    // Set up graphics scene for drawing
+    scene = new QGraphicsScene(this);
+    // Create model and pass scene pointer so it can draw to the screen.
+    model = new Model(scene);
+
+    // TODO Joey Set up what scene size based off image size.
+    scene->setSceneRect(0,0,1000,1000);
+
+    // Create graphics view
+    spritegraphicsview = new SpriteGraphicsView();
+    spritegraphicsview->setScene(scene);
+    spritegraphicsview->setFixedSize(700, 700);
+    spritegraphicsview->show();
+    // Enable Mouse Events
+    spritegraphicsview->setMouseTracking(true);
+
+    // Connect mouse signals and slots
+    connect (spritegraphicsview, SIGNAL(MouseMoveSignal(QPointF)),this, SLOT(MouseMove(QPointF)));
+    connect(spritegraphicsview, SIGNAL(MouseClickedSignal(QPointF)), this, SLOT(MouseClicked(QPointF)));
+    connect(spritegraphicsview, SIGNAL(MouseReleaseSignal(QPointF)), this, SLOT(MouseReleased(QPointF)));
+
+    // Add the spritegraphicsview to the layout
+    graphicslayout->addWidget(spritegraphicsview);
+    graphicslayout->addStretch(1);
 
 }
 
@@ -74,7 +103,23 @@ void MainWindow::on_primaryColorButton_clicked()
         QString rgbaString = QString("%1, %2, %3, %4").arg(chosenColor.red()).arg(chosenColor.green()).arg(chosenColor.blue()).arg(chosenColor.alpha());
         qDebug() << rgbaString;
         ui->primaryColorButton->setStyleSheet(QString("background-color: rgba(%1)").arg(rgbaString));
-
     }
+
+}
+
+
+void MainWindow::MouseClicked(QPointF point)
+{
+    qDebug() << "Mouse Clicked X= " << point.x() << " Y= " << point.y();
+}
+
+void MainWindow::MouseMove(QPointF point)
+{
+    qDebug() << "Mouse Move X= " << point.x() << " Y= " << point.y();
+}
+
+void MainWindow::MouseReleased(QPointF point)
+{
+    qDebug() << "Mouse Released X= " << point.x() << " Y= " << point.y();
 
 }
