@@ -7,10 +7,15 @@
 #include "tool.h"
 #include "vector.h"
 #include <QGraphicsScene>
+#include <QtGui>
+#include <qobject.h>
+#include <string>
+#include <sstream>
+using namespace std;
 
-class Model
+class Model :public QObject
 {
-
+    Q_OBJECT
 private:
     // private data members
     Sprite *selectedSprite;
@@ -26,16 +31,25 @@ private:
     void UpdateGUI();
 
     void DrawGrid(int height, int width, int unitsize);
-    void DrawRectToScreen(float x, float y, float height, float width, Vector4 color);
+
+
+
+    //QList<QGraphicsRectItem*> pixels;
+    QMap<string,QGraphicsRectItem*> pixelmap;
 
 public:
     Model(QGraphicsScene* scene);
     Model();
-    void Draw(int, int, Vector4);
-    void MouseClicked(int, int);
-    void MouseReleased(int, int);
+    void Draw(int x, int y, Vector4 color);
+    void DeleteRect(int x, int y);
     void AddLayer();
     void AddImage();
+    QPoint GetCellLocation(QPointF point);
+
+public slots:
+    void MouseClicked(QPointF point);
+    void MouseMove(QPointF point);
+    void MouseReleased(QPointF point);
 
 };
 

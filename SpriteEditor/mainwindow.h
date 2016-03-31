@@ -38,9 +38,7 @@ private slots:
 
     void on_primaryColorButton_clicked();
 
-    void MouseClicked(QPointF point);
-    void MouseMove(QPointF point);
-    void MouseReleased(QPointF point);
+
 
 public:
     explicit MainWindow(QWidget *parent = 0);

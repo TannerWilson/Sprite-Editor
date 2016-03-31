@@ -32,7 +32,7 @@ MainWindow::MainWindow(QWidget *parent) :
     model = new Model(scene);
 
     // TODO Joey Set up what scene size based off image size.
-    scene->setSceneRect(0,0,1000,1000);
+    scene->setSceneRect(0,0,3000,3000);
 
     // Create graphics view
     spritegraphicsview = new SpriteGraphicsView();
@@ -43,9 +43,9 @@ MainWindow::MainWindow(QWidget *parent) :
     spritegraphicsview->setMouseTracking(true);
 
     // Connect mouse signals and slots
-    connect (spritegraphicsview, SIGNAL(MouseMoveSignal(QPointF)),this, SLOT(MouseMove(QPointF)));
-    connect(spritegraphicsview, SIGNAL(MouseClickedSignal(QPointF)), this, SLOT(MouseClicked(QPointF)));
-    connect(spritegraphicsview, SIGNAL(MouseReleaseSignal(QPointF)), this, SLOT(MouseReleased(QPointF)));
+    connect (spritegraphicsview, SIGNAL(MouseMoveSignal(QPointF)),model, SLOT(MouseMove(QPointF)));
+    connect(spritegraphicsview, SIGNAL(MouseClickedSignal(QPointF)), model, SLOT(MouseClicked(QPointF)));
+    connect(spritegraphicsview, SIGNAL(MouseReleaseSignal(QPointF)), model, SLOT(MouseReleased(QPointF)));
 
     // Add the spritegraphicsview to the layout
     graphicslayout->addWidget(spritegraphicsview);
@@ -108,18 +108,3 @@ void MainWindow::on_primaryColorButton_clicked()
 }
 
 
-void MainWindow::MouseClicked(QPointF point)
-{
-    qDebug() << "Mouse Clicked X= " << point.x() << " Y= " << point.y();
-}
-
-void MainWindow::MouseMove(QPointF point)
-{
-    qDebug() << "Mouse Move X= " << point.x() << " Y= " << point.y();
-}
-
-void MainWindow::MouseReleased(QPointF point)
-{
-    qDebug() << "Mouse Released X= " << point.x() << " Y= " << point.y();
-
-}
