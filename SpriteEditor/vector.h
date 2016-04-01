@@ -7,6 +7,7 @@ class Vector4
 public:
     Vector4(int r, int g, int b, int a);
     Vector4();
+
     int r;
     int g;
     int b;
