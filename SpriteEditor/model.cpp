@@ -12,53 +12,58 @@ Model::Model(QGraphicsScene* scene,int screenheight,int screenwidth,int unitsize
 
 void Model::Save()
 {
- QString fileName = QFileDialog::getSaveFileName();
+    QString fileName = QFileDialog::getSaveFileName();
 
- QString toSave = "";
+    QString toSave = "";
 
- QFile file(fileName);
+    QFile file(fileName);
 
- QTextStream stream( &file );
+    QTextStream stream( &file );
 
- // Loop through each image in sprite
- for(size_t i = 0; i < this->selectedSprite->images.size(); i++)
- {
-     Image current = this->selectedSprite->images.at(i);
 
-     // loop through each layer in current image
-     for(size_t i = 0; i < current.layers.size(); i++)
-     {
-         // Get current layer and add it to string
-         Layer temp = current.layers.at(i);
-         Vector4* RGB = temp.pixels;
 
-         if ( file.open(QIODevice::ReadWrite) )
-         {
-             QString sep = ",";
-             toSave = QString::number(RGB->r) + sep + QString::number(RGB->g) + sep + QString::number(RGB->b) + sep + QString::number(RGB->a);
-             stream << toSave << "\n";
-         }
-         //toSave += RGB->r + "," + RGB->g + "," + RGB->b + "," + RGB->a + "\n";
-     }
- }
+    Image current = this->selectedSprite->images.at(i);
+
+
+    // Get current layer and add it to string
+//    Layer temp = current.layers.at(i);
+//    Vector4* RGB = temp.pixels;
+
+    for (size_t i = 0; i < this->pixelmap.size(); i++)
+    {
+
+    }
+
+    if ( file.open(QIODevice::ReadWrite) )
+    {
+        QString sep = ",";
+        toSave = QString::number(RGB->r) + sep + QString::number(RGB->g) + sep + QString::number(RGB->b) + sep + QString::number(RGB->a);
+        stream << toSave << "\n";
+    }
+
+
+
 
 
 }
 
-void Model::Load(QString fileName)
+void Model::Open()
 {
-    QFile file(fileName);
-    QTextStream in(&file);
+      qDebug() << "open" << endl;
+//    QString fileName = QFileDialog::getSaveFileName();
 
-    // Ensure file is open
-    if (!file.open(QIODevice::ReadOnly))
-    {
-        QMessageBox::information(0, "Error", file.errorString());
-    }
-    while(!in.atEnd())
-    {
-        QString line = in.readLine();
-    }
+//    QFile file(fileName);
+//    QTextStream in(&file);
+
+//    // Ensure file is open
+//    if (!file.open(QIODevice::ReadOnly))
+//    {
+//        QMessageBox::information(0, "Error", file.errorString());
+//    }
+//    while(!in.atEnd())
+//    {
+//        QString line = in.readLine();
+//    }
 }
 
 void Model::Export(Sprite sprite){;}

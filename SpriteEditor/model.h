@@ -12,6 +12,10 @@
 #include <string>
 #include <sstream>
 #include <QDebug>
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QGraphicsRectItem>
+
 using namespace std;
 
 class Model :public QObject
@@ -52,7 +56,7 @@ public slots:
     void MouseMove(QPointF point);
     void MouseReleased(QPointF point);
     void Save();
-    void Load();
+    void Open();
 
 };
 

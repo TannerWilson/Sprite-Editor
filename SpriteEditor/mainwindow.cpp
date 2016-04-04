@@ -13,6 +13,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->menuBar->update();
+    ui->menuBar->activateWindow();
+
     ScreenHeight = 1000;
     ScreenWidth = 1000;
 
@@ -55,7 +58,10 @@ MainWindow::MainWindow(QWidget *parent) :
     graphicslayout->addStretch(1);
 
     GIFExport gifExport;
+
+    // Connect menu bar actions
     connect(ui->actionSave, SIGNAL(triggered()), model, SLOT(Save()));
+    connect(ui->actionOpen, SIGNAL(triggered()), model, SLOT(Open()));
 
 }
 
