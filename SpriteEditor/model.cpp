@@ -4,6 +4,7 @@ Model::Model(QGraphicsScene* scene,int screenheight,int screenwidth,int unitsize
 {
     this->unitsize = unitsize;
     this->scene = scene;
+    this->color = Vector4(0,0,0,255);
     DrawGrid(screenheight,screenwidth,unitsize);
 }
 
@@ -119,7 +120,11 @@ QPoint Model::GetCellLocation(QPointF point)
 void Model::MouseClicked(QPointF point)
 {
     QPoint cellloc = GetCellLocation(point);
-    this->Draw(cellloc.x(),cellloc.y(),Vector4(255,0,0,255));
+    this->Draw(cellloc.x(),cellloc.y(),this->color);
+    qDebug() << this->color.r;
+    qDebug() << this->color.g;
+    qDebug() << this->color.b;
+    qDebug() << this->color.a;
 }
 
 void Model::MouseMove(QPointF point)

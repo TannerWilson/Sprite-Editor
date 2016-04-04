@@ -26,8 +26,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->graphicsframe->setLayout(graphicslayout);
 
     // Set the primary and secondary color choices
-    ui->primaryColorButton->setStyleSheet("background-color: red");
-    ui->secondaryColorButton->setStyleSheet("background-color: yellow");
+    ui->primaryColorButton->setStyleSheet("background-color: black");
+    ui->secondaryColorButton->setStyleSheet("background-color: white");
 
     // Set up graphics scene for drawing
     scene = new QGraphicsScene(this);
@@ -62,18 +62,6 @@ MainWindow::~MainWindow()
 }
 
 /*
- * Sets the current drawing color to the color displayed on the partially hidden color button.
- * Swaps the colors shown on the primary/secondary button pair.
- */
-void MainWindow::on_secondaryColorButton_clicked()
-{
-    // Swap the colors shown on the two buttons
-    QString styleInfo = (ui->primaryColorButton->styleSheet());
-    ui->primaryColorButton->setStyleSheet(ui->secondaryColorButton->styleSheet());
-    ui->secondaryColorButton->setStyleSheet(styleInfo);
-}
-
-/*
  * Creates a new, blank image frame for the Sprite, shown on the left of the GUI.
  */
 void MainWindow::on_addFrameButton_clicked()
@@ -102,12 +90,35 @@ void MainWindow::on_primaryColorButton_clicked()
     if(chosenColor.isValid())
     {
         QString styleInfo = (ui->primaryColorButton->styleSheet());
-        ui->secondaryColorButton->setStyleSheet(ui->primaryColorButton->styleSheet());
+
+        // I don't think this is how the ux should work - GC
+        //ui->secondaryColorButton->setStyleSheet(ui->primaryColorButton->styleSheet());
+
         QString rgbaString = QString("%1, %2, %3, %4").arg(chosenColor.red()).arg(chosenColor.green()).arg(chosenColor.blue()).arg(chosenColor.alpha());
         qDebug() << rgbaString;
         ui->primaryColorButton->setStyleSheet(QString("background-color: rgba(%1)").arg(rgbaString));
+
+        this->model->color = Vector4(chosenColor.red(), chosenColor.green(), chosenColor.blue(), chosenColor.alpha());
     }
 
+}
+
+/*
+ * Sets the current drawing color to the color displayed on the partially hidden color button.
+ * Swaps the colors shown on the primary/secondary button pair.
+ */
+void MainWindow::on_secondaryColorButton_clicked()
+{
+    // Swap the colors shown on the two buttons
+    QString styleInfo = (ui->primaryColorButton->styleSheet());
+    ui->primaryColorButton->setStyleSheet(ui->secondaryColorButton->styleSheet());
+    ui->secondaryColorButton->setStyleSheet(styleInfo);
+
+    // Swap the model's primary and secondary colors
+    Vector4 temp(model->color.r, model->color.g, model->color.b, model->color.a);
+    Vector4 temp2(model->secondaryColor.r, model->secondaryColor.g, model->secondaryColor.b, model->secondaryColor.a);
+    model->color = temp2;
+    model->secondaryColor = temp;
 }
 
 

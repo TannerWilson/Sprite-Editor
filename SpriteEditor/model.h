@@ -43,6 +43,8 @@ public:
     void AddImage();
     QPoint GetCellLocation(QPointF point);
     int unitsize;
+    Vector4 color;
+    Vector4 secondaryColor;
 
 public slots:
     void MouseClicked(QPointF point);
