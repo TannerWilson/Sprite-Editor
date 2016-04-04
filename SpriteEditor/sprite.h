@@ -8,7 +8,10 @@ class Sprite
 {
 public:
     Sprite();
-    vector<Image> images;
+    vector<Image*> images;
+    Image* AddImage();
+    void DeleteImage(int index);
+    Image* GetImage(int index);
 };
 
 #endif // SPRITE_H

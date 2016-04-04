@@ -4,12 +4,21 @@
 
 #include <vector>
 #include "layer.h"
+#include <qmap.h>
+#include <string>
+#include <qpoint.h>
+#include <QColor>
+#include <sstream>
 using namespace std;
 
 class Image
 {
 public:
     Image();
-    vector<Layer> layers;
+    QColor GetPixelColor(QPoint point);
+    void AddPixel(QPoint point, QColor color);
+    void ClearPixel(QPoint point);
+private:
+    QMap<string,QColor> pixels;
 };
 #endif // IMAGE_H

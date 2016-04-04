@@ -2,14 +2,22 @@
 #define LAYER_H
 
 
-#include "vector.h"
+
+using namespace std;
+
 class Layer
 {
 public:
-    Layer(int width, int height);
+    Layer();
     ~Layer();
-    Vector4* pixels;
+
+
+private:
+
 };
 
 
+
 #endif // LAYER_H
+
+

@@ -6,6 +6,8 @@ Model::Model(QGraphicsScene* scene,int screenheight,int screenwidth,int unitsize
     this->scene = scene;
     this->color = Vector4(0,0,0,255);
     DrawGrid(screenheight,screenwidth,unitsize);
+    this->selectedSprite = new Sprite();
+    this->selectedImage = selectedSprite->GetImage(0);
 }
 
 // private methods
@@ -117,6 +119,8 @@ void Model::Draw(int x, int y, Vector4 color)
     else // Or just update the old pixel.
         pixelmap[posstring.str()]->setBrush(brush);
 
+    this->selectedImage->AddPixel(QPoint(x,y),QColor(color.r, color.g, color.b, color.a));
+
 }
 
 void Model::DeleteRect(int x, int y)
@@ -125,6 +129,8 @@ void Model::DeleteRect(int x, int y)
     posstring << x << y;
     if(pixelmap[posstring.str()] != NULL)
         pixelmap[posstring.str()]->setBrush(* new QBrush(QColor(0, 0, 0, 0)));
+
+    this->selectedImage->ClearPixel(QPoint(x,y));
 }
 
 QPoint Model::GetCellLocation(QPointF point)
