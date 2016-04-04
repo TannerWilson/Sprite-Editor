@@ -3,6 +3,7 @@
 Sprite::Sprite()
 {
     images.push_back(new Image());
+    currentImageIndex = 0;
 }
 
 Image* Sprite::AddImage()
@@ -20,4 +21,9 @@ void Sprite::DeleteImage(int index)
 Image* Sprite::GetImage(int index)
 {
     return images.at(index);
+}
+
+int Sprite::GetCurrentImageIndex()
+{
+    return currentImageIndex;
 }
