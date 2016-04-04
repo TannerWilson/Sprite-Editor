@@ -22,7 +22,7 @@ void Model::Save()
 
 
 
-    Image current = this->selectedSprite->images.at(i);
+//    Image current = this->selectedSprite->images.at(i);
 
 
     // Get current layer and add it to string
@@ -36,9 +36,9 @@ void Model::Save()
 
     if ( file.open(QIODevice::ReadWrite) )
     {
-        QString sep = ",";
-        toSave = QString::number(RGB->r) + sep + QString::number(RGB->g) + sep + QString::number(RGB->b) + sep + QString::number(RGB->a);
-        stream << toSave << "\n";
+//        QString sep = ",";
+//        toSave = QString::number(RGB->r) + sep + QString::number(RGB->g) + sep + QString::number(RGB->b) + sep + QString::number(RGB->a);
+//        stream << toSave << "\n";
     }
 
 
