@@ -22,7 +22,7 @@ static const uint qt_meta_data_Model[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   14, // methods
+       4,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -33,6 +33,7 @@ static const uint qt_meta_data_Model[] = {
       13,    7,    6,    6, 0x0a,
       35,    7,    6,    6, 0x0a,
       54,    7,    6,    6, 0x0a,
+      77,    6,    6,    6, 0x0a,
 
        0        // eod
 };
@@ -40,6 +41,7 @@ static const uint qt_meta_data_Model[] = {
 static const char qt_meta_stringdata_Model[] = {
     "Model\0\0point\0MouseClicked(QPointF)\0"
     "MouseMove(QPointF)\0MouseReleased(QPointF)\0"
+    "Save()\0"
 };
 
 void Model::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -51,6 +53,7 @@ void Model::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void 
         case 0: _t->MouseClicked((*reinterpret_cast< QPointF(*)>(_a[1]))); break;
         case 1: _t->MouseMove((*reinterpret_cast< QPointF(*)>(_a[1]))); break;
         case 2: _t->MouseReleased((*reinterpret_cast< QPointF(*)>(_a[1]))); break;
+        case 3: _t->Save(); break;
         default: ;
         }
     }
@@ -88,9 +91,9 @@ int Model::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 3)
+        if (_id < 4)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 3;
+        _id -= 4;
     }
     return _id;
 }

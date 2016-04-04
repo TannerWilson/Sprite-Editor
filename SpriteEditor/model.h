@@ -11,6 +11,7 @@
 #include <qobject.h>
 #include <string>
 #include <sstream>
+#include <QDebug>
 using namespace std;
 
 class Model :public QObject
@@ -26,7 +27,7 @@ private:
     QGraphicsScene* scene;
 
     // private methods
-    void Save(Sprite);
+
     void Export(Sprite);
     void UpdateGUI();
 
@@ -50,6 +51,8 @@ public slots:
     void MouseClicked(QPointF point);
     void MouseMove(QPointF point);
     void MouseReleased(QPointF point);
+    void Save();
+    void Load();
 
 };
 

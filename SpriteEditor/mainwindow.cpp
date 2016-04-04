@@ -54,6 +54,9 @@ MainWindow::MainWindow(QWidget *parent) :
     graphicslayout->addWidget(spritegraphicsview);
     graphicslayout->addStretch(1);
 
+    GIFExport gifExport;
+    connect(ui->actionSave, SIGNAL(triggered()), model, SLOT(Save()));
+
 }
 
 MainWindow::~MainWindow()

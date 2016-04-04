@@ -10,7 +10,57 @@ Model::Model(QGraphicsScene* scene,int screenheight,int screenwidth,int unitsize
 
 // private methods
 
-void Model::Save(Sprite sprite){;}
+void Model::Save()
+{
+ QString fileName = QFileDialog::getSaveFileName();
+
+ QString toSave = "";
+
+ QFile file(fileName);
+
+ QTextStream stream( &file );
+
+ // Loop through each image in sprite
+ for(size_t i = 0; i < this->selectedSprite->images.size(); i++)
+ {
+     Image current = this->selectedSprite->images.at(i);
+
+     // loop through each layer in current image
+     for(size_t i = 0; i < current.layers.size(); i++)
+     {
+         // Get current layer and add it to string
+         Layer temp = current.layers.at(i);
+         Vector4* RGB = temp.pixels;
+
+         if ( file.open(QIODevice::ReadWrite) )
+         {
+             QString sep = ",";
+             toSave = QString::number(RGB->r) + sep + QString::number(RGB->g) + sep + QString::number(RGB->b) + sep + QString::number(RGB->a);
+             stream << toSave << "\n";
+         }
+         //toSave += RGB->r + "," + RGB->g + "," + RGB->b + "," + RGB->a + "\n";
+     }
+ }
+
+
+}
+
+void Model::Load(QString fileName)
+{
+    QFile file(fileName);
+    QTextStream in(&file);
+
+    // Ensure file is open
+    if (!file.open(QIODevice::ReadOnly))
+    {
+        QMessageBox::information(0, "Error", file.errorString());
+    }
+    while(!in.atEnd())
+    {
+        QString line = in.readLine();
+    }
+}
+
 void Model::Export(Sprite sprite){;}
 void Model::UpdateGUI(){;}
 

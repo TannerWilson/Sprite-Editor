@@ -9,6 +9,7 @@
 #include "model.h"
 #include "spritegraphicsview.h"
 #include <QPointF>
+#include <gifexport.h>
 
 namespace Ui
 {
