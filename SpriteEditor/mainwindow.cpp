@@ -21,8 +21,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Set up stuff for the part of the GUI that allows you to add image frames,
     // browse image frames, etc.
-    framesLayout = new QVBoxLayout;
-    ui->frameContainer->setLayout(framesLayout);
+    framesLayout = new QVBoxLayout(ui->frameContents);
+    framesLayout->setSizeConstraint(QLayout::SetMinAndMaxSize);
+    //ui->frameContainer->setLayout(framesLayout);
 
     // Set up box layout for graphics frame
     graphicslayout = new QVBoxLayout;
@@ -83,7 +84,7 @@ void MainWindow::on_addFrameButton_clicked()
     view->setFixedSize(individualFrameWidth, individualFrameHeight);
     view->show();
     framesLayout->addWidget(view);
-    framesLayout->addStretch(1);
+    //framesLayout->addStretch(1);
 }
 
 /*
