@@ -5,7 +5,7 @@
 #include <string>
 #include <QPushButton>
 #include <QDebug>
-
+#include <QInputDialog>
 using namespace std;
 
 MainWindow::MainWindow(QWidget *parent) :

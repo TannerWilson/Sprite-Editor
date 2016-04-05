@@ -17,58 +17,87 @@ Model::Model(QGraphicsScene* scene,int screenheight,int screenwidth,int unitsize
 
 void Model::Save()
 {
+    int cellCount = (screenheight/unitsize) * (screenwidth/unitsize);
+
     QString fileName = QFileDialog::getSaveFileName();
-
-    QString toSave = "";
-
+    QString colorDelim = " ";
     QFile file(fileName);
-
-    QTextStream stream( &file );
-
-
-
-//    Image current = this->selectedSprite->images.at(i);
-
-
-    // Get current layer and add it to string
-//    Layer temp = current.layers.at(i);
-//    Vector4* RGB = temp.pixels;
-
-    for (size_t i = 0; i < this->pixelmap.size(); i++)
-    {
-
-    }
+    int rowIndicator = screenwidth / unitsize;
 
     if ( file.open(QIODevice::ReadWrite) )
     {
-//        QString sep = ",";
-//        toSave = QString::number(RGB->r) + sep + QString::number(RGB->g) + sep + QString::number(RGB->b) + sep + QString::number(RGB->a);
-//        stream << toSave << "\n";
+        QTextStream stream( &file );
+
+        stream << screenwidth << " " << screenheight << "\n";
+        stream << selectedSprite->images.size() << "\n";
+        stream << unitsize << "\n";
+
+        for (size_t i = 0; i < selectedSprite->images.size(); i++){
+            Image* currentImage = selectedSprite->GetImage(i);
+
+            for (int k = 0; k < cellCount; k ++){
+                QColor currentColor = currentImage->GetPixelColorIndex(k);
+                stream <<  currentColor.red() << colorDelim;
+                stream <<  currentColor.green() << colorDelim;
+                stream <<  currentColor.blue() << colorDelim;
+                stream <<  currentColor.alpha();
+                if ((k+1) % rowIndicator == 0 && k !=0){
+                    stream << "\n";
+                }
+                else {
+                    stream << " ";
+                }
+            }
+
+        }
     }
-
-
-
-
-
+    file.close();
 }
 
 void Model::Open()
 {
-      qDebug() << "open" << endl;
-//    QString fileName = QFileDialog::getSaveFileName();
+    int frameCount = 0;
 
-//    QFile file(fileName);
-//    QTextStream in(&file);
+    QString filename = QFileDialog::getOpenFileName();
 
-//    // Ensure file is open
-//    if (!file.open(QIODevice::ReadOnly))
-//    {
-//        QMessageBox::information(0, "Error", file.errorString());
-//    }
-//    while(!in.atEnd())
-//    {
-//        QString line = in.readLine();
-//    }
+    QFile file(filename);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        return;
+
+    QString content = file.readAll();
+    QTextStream stream(&content);
+
+    this->selectedSprite->images.clear();
+
+    stream >> screenheight >> screenwidth >> frameCount >> unitsize;
+
+    int cellCount = (screenheight/unitsize) * (screenwidth/unitsize);
+
+    for(int i = 0; i < frameCount; i++){
+        selectedSprite->AddImage();
+        qDebug() << "Added Image";
+    }
+
+    while(!stream.atEnd()){
+        for (int i = 0; i < frameCount; i++){
+            this->selectedImage = selectedSprite->GetImage(i);
+            this->selectedImage->SetSize(screenwidth,screenheight, unitsize);
+            qDebug() << "Selected Image at index " <<i;
+            for (int k = 0; k < cellCount; k++){
+                int red;
+                int green;
+                int blue;
+                int alpha;
+                stream >> red >> green >> blue >> alpha;
+                qDebug() << red << green << blue << alpha;
+                QPoint point = selectedImage->IndexToPoint(k);
+                if((red+blue+green+alpha) !=0){
+                    penDraw(point.x(),point.y(),Vector4(red, green, blue, alpha));
+                }
+            }
+        }
+    }
+    file.close();
 }
 
 void Model::Export(Sprite sprite){;}
@@ -151,6 +180,7 @@ void Model::penDraw(int x, int y, Vector4 color)
         pixelmap[posstring.str()]->setBrush(brush);
 
     this->selectedImage->AddPixel(QPoint(x,y),QColor(color.r, color.g, color.b, color.a));
+    this->selectedImage->AddPixelIndex(QPoint(x,y),QColor(color.r, color.g, color.b, color.a));
 
 }
 
