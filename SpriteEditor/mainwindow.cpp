@@ -58,6 +58,10 @@ MainWindow::MainWindow(QWidget *parent) :
     graphicslayout->addWidget(spritegraphicsview);
     graphicslayout->addStretch(1);
 
+    // Initialize GUI frames window with 1 frame
+    on_addFrameButton_clicked();
+
+
     GIFExport gifExport;
 
     // Connect menu bar actions
@@ -132,7 +136,7 @@ void MainWindow::on_frameButton_clicked()
  */
 void MainWindow::on_deleteFrameButton_clicked()
 {
-    if(frameWidgets.size() > 0)
+    if(frameWidgets.size() > 1)
         {
             // Remove frame from GUI
             list<QPushButton*>::iterator it;
@@ -146,14 +150,17 @@ void MainWindow::on_deleteFrameButton_clicked()
             // Remove frame from model
             model->RemoveImageAt(model->GetCurrentImageIndex());
 
-            //qDebug() << frameWidgets.size();
 
-            //Update frame button labels
+            //Update frame button labels and put focus on the frame that came
+            // before the deleted frame
             it = frameWidgets.begin();
             for(size_t i = 0; i < frameWidgets.size(); i++)
             {
                 QPushButton *button = *it;
                 button->setText(QString::number(i+1));
+                if(i == model->GetCurrentImageIndex())
+                    button->animateClick();
+
                 advance(it,1);
             }
 
