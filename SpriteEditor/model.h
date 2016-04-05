@@ -36,6 +36,9 @@ private:
     void DrawGrid(int height, int width, int unitsize);
     QMap<string,QGraphicsRectItem*> pixelmap;
 
+    int screenwidth;
+    int screenheight;
+
 public:
     Model(QGraphicsScene* scene, int screenheight, int screenwidth, int unitsize);
     Model();
@@ -43,6 +46,7 @@ public:
     void erase(int x, int y);
     void fill(int x, int y, Vector4 color);
 
+    void RedrawImage(int index);
     void DeleteRect(int x, int y);
     void AddLayer();
     void AddImage();

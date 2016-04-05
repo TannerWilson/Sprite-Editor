@@ -9,6 +9,8 @@ Model::Model(QGraphicsScene* scene,int screenheight,int screenwidth,int unitsize
     this->selectedSprite = new Sprite();
     this->selectedImage = selectedSprite->GetImage(0);
     this->currentTool = "Pen";
+    this->screenheight = screenheight;
+    this->screenwidth = screenwidth;
 }
 
 // private methods
@@ -116,7 +118,7 @@ int Model::GetCurrentImageIndex()
 void Model::SetCurrentImageIndex(int index)
 {
     selectedImage = selectedSprite->SetCurrentImageIndex(index);
-
+    RedrawImage(index);
 }
 
 
@@ -242,6 +244,29 @@ void Model::MouseMove(QPointF point)
 
 void Model::MouseReleased(QPointF point)
 {
+
+}
+
+
+void Model::RedrawImage(int index)
+{
+
+    qDeleteAll( pixelmap );
+    pixelmap.clear();
+    scene->clear();
+
+    selectedImage = this->selectedSprite->GetImage(index);
+    DrawGrid(this->screenheight,this->screenwidth,this->unitsize);
+
+    for(int x = 0; x < screenheight/unitsize; x++)
+    {
+        for(int y = 0; y < screenwidth/unitsize; y++)
+        {
+            QColor newcolor = selectedImage->GetPixelColor(QPoint(x,y));
+            if(newcolor != QColor(0,0,0,0))
+                penDraw(x,y,Vector4(newcolor.red(),newcolor.green(),newcolor.blue(),newcolor.alpha()));
+        }
+    }
 
 }
 
