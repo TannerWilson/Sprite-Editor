@@ -147,6 +147,7 @@ int Model::GetCurrentImageIndex()
 void Model::SetCurrentImageIndex(int index)
 {
     selectedImage = selectedSprite->SetCurrentImageIndex(index);
+    selectedImage->SetSize(screenwidth,screenheight, unitsize);
     RedrawImage(index);
 }
 
