@@ -8,6 +8,9 @@
 #include <QInputDialog>
 using namespace std;
 
+/*
+* Constructor for the main form
+*/
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -17,8 +20,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->menuBar->update();
     ui->menuBar->activateWindow();
 
-    ScreenHeight = 1000;
-    ScreenWidth = 1000;
+    screenHeight = 1000;
+    screenWidth = 1000;
 
 
     // Set up stuff for the part of the GUI that allows you to add image frames,
@@ -27,7 +30,7 @@ MainWindow::MainWindow(QWidget *parent) :
     framesLayout->setSizeConstraint(QLayout::SetMinAndMaxSize);
 
     // Set up box layout for graphics frame
-    graphicslayout = new QVBoxLayout;
+    graphicsLayout = new QVBoxLayout;
     ui->graphicsframe->setLayout(graphicslayout);
 
     // Set the primary and secondary color choices
@@ -38,9 +41,9 @@ MainWindow::MainWindow(QWidget *parent) :
     // set up screen width and height
     while(true)
     {
-        ScreenHeight = QInputDialog::getInt(0, "Select Height","Input the desired height of your sprite", 1) * 25;
+        screenHeight = QInputDialog::getInt(0, "Select Height","Input the desired height of your sprite", 1) * 25;
 
-        if(ScreenHeight < 25 || ScreenHeight > 51200)
+        if(screenHeight < 25 || screenHeight > 51200)
         {
             QMessageBox::information(
                 this,
@@ -52,9 +55,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     while(true)
     {
-        ScreenWidth = QInputDialog::getInt(0, "Select Width","Input the desired width of your sprite", 1) * 25;
+        screenWidth = QInputDialog::getInt(0, "Select Width","Input the desired width of your sprite", 1) * 25;
 
-        if(ScreenWidth < 25 || ScreenWidth > 51200)
+        if(screenWidth < 25 || screenWidth > 51200)
        {
             QMessageBox::information(
                 this,
@@ -68,33 +71,33 @@ MainWindow::MainWindow(QWidget *parent) :
     // Set up graphics scene for drawing
     scene = new QGraphicsScene(this);
     // Create model and pass scene pointer so it can draw to the screen.
-    model = new Model(scene,ScreenHeight,ScreenWidth,25);
+    model = new Model(scene,screenHeight,screenWidth,25);
 
     // TODO Joey Set up what scene size based off image size.
-    scene->setSceneRect(0,0,ScreenHeight,ScreenWidth);
+    scene->setSceneRect(0,0,screenHeight,screenWidth);
 
     // Create graphics view
-    spritegraphicsview = new SpriteGraphicsView();
-    spritegraphicsview->setScene(scene);
-    spritegraphicsview->setFixedSize(700, 700);
-    spritegraphicsview->show();
+    spriteGraphicsView = new SpriteGraphicsView();
+    spriteGraphicsView->setScene(scene);
+    spriteGraphicsView->setFixedSize(700, 700);
+    spriteGraphicsView->show();
     // Enable Mouse Events
-    spritegraphicsview->setMouseTracking(true);
+    spriteGraphicsView->setMouseTracking(true);
 
     // Connect mouse signals and slots
-    connect (spritegraphicsview, SIGNAL(MouseMoveSignal(QPointF)),model, SLOT(MouseMove(QPointF)));
-    connect(spritegraphicsview, SIGNAL(MousePressSignal(QPointF)), model, SLOT(MousePressed(QPointF)));
-    connect(spritegraphicsview, SIGNAL(MouseReleaseSignal(QPointF)), model, SLOT(MouseReleased(QPointF)));
+    connect (spriteGraphicsView, SIGNAL(MouseMoveSignal(QPointF)),model, SLOT(MouseMove(QPointF)));
+    connect(spriteGraphicsView, SIGNAL(MousePressSignal(QPointF)), model, SLOT(MousePressed(QPointF)));
+    connect(spriteGraphicsView, SIGNAL(MouseReleaseSignal(QPointF)), model, SLOT(MouseReleased(QPointF)));
 
     connect(ui->StartPreview, SIGNAL(pressed()),model,SLOT(StartPreview()));
     connect(ui->StopPreview, SIGNAL(pressed()),model,SLOT(StopPreview()));
 
     // Add the spritegraphicsview to the layout
-    graphicslayout->addWidget(spritegraphicsview);
-    graphicslayout->addStretch(1);
+    graphicsLayout->addWidget(spriteGraphicsView);
+    graphicsLayout->addStretch(1);
 
     // Initialize GUI frames window with 1 frame
-    on_addFrameButton_clicked();
+    onAddFrameButtonClicked();
     model->SetCurrentImageIndex(0);
 
 
@@ -105,7 +108,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionOpen, SIGNAL(triggered()), model, SLOT(Open()));
 
     // pen is default tool
-    on_brushButton_clicked();
+    onBrushButtonClicked();
     this->ui->eraserButton->setStyleSheet("border:0; background-color:none");
     this->ui->bucketButton->setStyleSheet("border:0; background-color:none");
 }
@@ -118,7 +121,7 @@ MainWindow::~MainWindow()
 /*
  * Creates a new, blank image frame for the Sprite, shown on the left of the GUI.
  */
-void MainWindow::on_addFrameButton_clicked()
+void MainWindow::onAddFrameButtonClicked()
 {
     QPushButton *frameButton = new QPushButton(this);
     frameButton->setGeometry(0,0,individualFrameWidth,individualFrameHeight);
@@ -129,7 +132,7 @@ void MainWindow::on_addFrameButton_clicked()
     frameButton->setStyleSheet("background-color: white");
     framesLayout->addWidget(frameButton);
     frameWidgets.push_back(frameButton);
-    connect(frameButton, SIGNAL(clicked()), this, SLOT(on_frameButton_clicked()));
+    connect(frameButton, SIGNAL(clicked()), this, SLOT(onFrameButtonClicked()));
 
     model->AddImage();
 }
@@ -138,7 +141,7 @@ void MainWindow::on_addFrameButton_clicked()
 /*
  * Shows the selected frame on the canvas for modification
  */
-void MainWindow::on_frameButton_clicked()
+void MainWindow::onFrameButtonClicked()
 {
     // Get rid of border on previously selected frame button
         // Add a border to the newly selected frame button
@@ -173,7 +176,7 @@ void MainWindow::on_frameButton_clicked()
 /*
  * Removes the selected frame from the Sprite.
  */
-void MainWindow::on_deleteFrameButton_clicked()
+void MainWindow::onDeleteFrameButtonClicked()
 {
     if(frameWidgets.size() > 1)
         {
@@ -210,7 +213,7 @@ void MainWindow::on_deleteFrameButton_clicked()
  * Opens the color picker, saves the selected color, and updates the primary and secondary
  * color choices
  */
-void MainWindow::on_primaryColorButton_clicked()
+void MainWindow::onPrimaryColorButtonClicked()
 {
     // First three params are meaningless... just default. Last param enables transparency option
     QColor chosenColor = QColorDialog::getColor(Qt::white, 0, QString(), QColorDialog::ShowAlphaChannel);
@@ -236,7 +239,7 @@ void MainWindow::on_primaryColorButton_clicked()
  * Sets the current drawing color to the color displayed on the partially hidden color button.
  * Swaps the colors shown on the primary/secondary button pair.
  */
-void MainWindow::on_secondaryColorButton_clicked()
+void MainWindow::onSecondaryColorButtonClicked()
 {
     // Swap the colors shown on the two buttons
     QString styleInfo = (ui->primaryColorButton->styleSheet());
@@ -251,7 +254,7 @@ void MainWindow::on_secondaryColorButton_clicked()
 }
 
 
-void MainWindow::on_brushButton_clicked()
+void MainWindow::onBrushButtonClicked()
 {
     this->model->currentTool = "Pen";
     //this->setCursor(Qt::WaitCursor);
@@ -264,7 +267,7 @@ void MainWindow::on_brushButton_clicked()
     setCursor(map);
 }
 
-void MainWindow::on_eraserButton_clicked()
+void MainWindow::onEraserButtonClicked()
 {
     this->model->currentTool = "Eraser";
     this->ui->eraserButton->setStyleSheet("border:2px solid black; background-color:#999999");
@@ -276,7 +279,7 @@ void MainWindow::on_eraserButton_clicked()
     setCursor(map);
 }
 
-void MainWindow::on_bucketButton_clicked()
+void MainWindow::onBucketButtonClicked()
 {
     this->model->currentTool = "Bucket";
     this->ui->bucketButton->setStyleSheet("border:2px solid black; background-color:#999999");
