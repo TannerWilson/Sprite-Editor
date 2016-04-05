@@ -86,12 +86,16 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(spritegraphicsview, SIGNAL(MousePressSignal(QPointF)), model, SLOT(MousePressed(QPointF)));
     connect(spritegraphicsview, SIGNAL(MouseReleaseSignal(QPointF)), model, SLOT(MouseReleased(QPointF)));
 
+    connect(ui->StartPreview, SIGNAL(pressed()),model,SLOT(StartPreview()));
+    connect(ui->StopPreview, SIGNAL(pressed()),model,SLOT(StopPreview()));
+
     // Add the spritegraphicsview to the layout
     graphicslayout->addWidget(spritegraphicsview);
     graphicslayout->addStretch(1);
 
     // Initialize GUI frames window with 1 frame
     on_addFrameButton_clicked();
+    model->SetCurrentImageIndex(0);
 
 
     GIFExport gifExport;

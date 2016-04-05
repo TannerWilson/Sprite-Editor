@@ -29,7 +29,12 @@ private:
     QGraphicsScene* scene;
     int screenwidth;
     int screenheight;
+
+    int currentpreviewframe;
+    QTimer *previewtimer;
+
     QMap<string,QGraphicsRectItem*> pixelmap;
+
     bool mouseIsPressed;
 
     // private methods
@@ -67,6 +72,9 @@ public slots:
     void MouseReleased(QPointF point);
     void Save();
     void Open();
+    void StartPreview();
+    void StopPreview();
+    void Preview();
 
 };
 

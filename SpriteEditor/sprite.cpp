@@ -2,7 +2,6 @@
 
 Sprite::Sprite()
 {
-    images.push_back(new Image());
     currentImageIndex = 0;
 }
 

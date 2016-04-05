@@ -7,7 +7,6 @@ Model::Model(QGraphicsScene* scene,int screenheight,int screenwidth,int unitsize
     this->color = Vector4(0,0,0,255);
     DrawGrid(screenheight,screenwidth,unitsize);
     this->selectedSprite = new Sprite();
-    this->selectedImage = selectedSprite->GetImage(0);
     this->currentTool = "Pen";
     this->screenheight = screenheight;
     this->screenwidth = screenwidth;
@@ -139,7 +138,7 @@ void Model::penDraw(int x, int y, Vector4 color)
      */
 
     stringstream posstring;
-    posstring << x << y;
+    posstring << x << " " << y;
 
     // Is the pixel already there?
     if(pixelmap[posstring.str()] == NULL)
@@ -168,7 +167,7 @@ void Model::fill(int x, int y, Vector4 color)
 void Model::DeleteRect(int x, int y)
 {
     stringstream posstring;
-    posstring << x << y;
+    posstring << x << " " << y;
     if(pixelmap[posstring.str()] != NULL)
         pixelmap[posstring.str()]->setBrush(* new QBrush(QColor(0, 0, 0, 0)));
 
@@ -267,6 +266,7 @@ void Model::RedrawImage(int index)
     pixelmap.clear();
     scene->clear();
 
+
     selectedImage = this->selectedSprite->GetImage(index);
     DrawGrid(this->screenheight,this->screenwidth,this->unitsize);
 
@@ -282,4 +282,32 @@ void Model::RedrawImage(int index)
 
 }
 
+void Model::Preview()
+{
 
+    if(currentpreviewframe < selectedSprite->images.size())
+    {
+        RedrawImage(currentpreviewframe);
+        currentpreviewframe++;
+    }
+    else
+        currentpreviewframe = 0;
+
+}
+
+void Model::StartPreview()
+{
+    qDebug() << selectedSprite->images.size();
+    currentpreviewframe = 0;
+    previewtimer = new QTimer;
+    connect(previewtimer, SIGNAL(timeout()), this, SLOT(Preview()));
+    previewtimer->start(1000);
+}
+
+void Model::StopPreview()
+{
+    previewtimer->stop();
+    currentpreviewframe = 0;
+    RedrawImage(0);
+
+}
