@@ -15,6 +15,7 @@ public:
     void DeleteImage(int index);
     Image* GetImage(int index);
     int GetCurrentImageIndex();
+    Image* SetCurrentImageIndex(int index);
 };
 
 #endif // SPRITE_H

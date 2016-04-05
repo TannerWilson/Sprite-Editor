@@ -13,7 +13,7 @@ public:
     explicit SpriteGraphicsView(QWidget *parent = 0);
 signals:
     void MouseMoveSignal(QPointF point);
-    void MouseClickedSignal(QPointF point);
+    void MousePressSignal(QPointF point);
     void MouseReleaseSignal(QPointF point);
 
 public slots:

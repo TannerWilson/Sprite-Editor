@@ -2,7 +2,6 @@
 
 Sprite::Sprite()
 {
-    images.push_back(new Image());
     currentImageIndex = 0;
 }
 
@@ -16,6 +15,10 @@ Image* Sprite::AddImage()
 void Sprite::DeleteImage(int index)
 {
     images.erase(images.begin() + index);
+    if(currentImageIndex > 0)
+    {
+        currentImageIndex--;
+    }
 }
 
 Image* Sprite::GetImage(int index)
@@ -26,4 +29,10 @@ Image* Sprite::GetImage(int index)
 int Sprite::GetCurrentImageIndex()
 {
     return currentImageIndex;
+}
+
+Image* Sprite::SetCurrentImageIndex(int index)
+{
+    currentImageIndex = index;
+    return images[index];
 }

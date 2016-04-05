@@ -3,8 +3,9 @@
 #include <QColorDialog>
 #include <QColor>
 #include <string>
+#include <QPushButton>
 #include <QDebug>
-
+#include <QInputDialog>
 using namespace std;
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -19,11 +20,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ScreenHeight = 1000;
     ScreenWidth = 1000;
 
+
     // Set up stuff for the part of the GUI that allows you to add image frames,
     // browse image frames, etc.
     framesLayout = new QVBoxLayout(ui->frameContents);
     framesLayout->setSizeConstraint(QLayout::SetMinAndMaxSize);
-    //ui->frameContainer->setLayout(framesLayout);
 
     // Set up box layout for graphics frame
     graphicslayout = new QVBoxLayout;
@@ -32,6 +33,37 @@ MainWindow::MainWindow(QWidget *parent) :
     // Set the primary and secondary color choices
     ui->primaryColorButton->setStyleSheet("background-color: black");
     ui->secondaryColorButton->setStyleSheet("background-color: white");
+
+
+    // set up screen width and height
+    while(true)
+    {
+        ScreenHeight = QInputDialog::getInt(0, "Select Height","Input the desired height of your sprite", 1) * 25;
+
+        if(ScreenHeight < 25 || ScreenHeight > 51200)
+        {
+            QMessageBox::information(
+                this,
+                tr("Error"),
+                tr("Please input a value from 1 to 2048") );
+        }
+        else break;
+    }
+
+    while(true)
+    {
+        ScreenWidth = QInputDialog::getInt(0, "Select Width","Input the desired width of your sprite", 1) * 25;
+
+        if(ScreenWidth < 25 || ScreenWidth > 51200)
+       {
+            QMessageBox::information(
+                this,
+                tr("Error"),
+                tr("Please input a value from 1 to 2048") );
+        }
+        else break;
+    }
+
 
     // Set up graphics scene for drawing
     scene = new QGraphicsScene(this);
@@ -51,12 +83,20 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Connect mouse signals and slots
     connect (spritegraphicsview, SIGNAL(MouseMoveSignal(QPointF)),model, SLOT(MouseMove(QPointF)));
-    connect(spritegraphicsview, SIGNAL(MouseClickedSignal(QPointF)), model, SLOT(MouseClicked(QPointF)));
+    connect(spritegraphicsview, SIGNAL(MousePressSignal(QPointF)), model, SLOT(MousePressed(QPointF)));
     connect(spritegraphicsview, SIGNAL(MouseReleaseSignal(QPointF)), model, SLOT(MouseReleased(QPointF)));
+
+    connect(ui->StartPreview, SIGNAL(pressed()),model,SLOT(StartPreview()));
+    connect(ui->StopPreview, SIGNAL(pressed()),model,SLOT(StopPreview()));
 
     // Add the spritegraphicsview to the layout
     graphicslayout->addWidget(spritegraphicsview);
     graphicslayout->addStretch(1);
+
+    // Initialize GUI frames window with 1 frame
+    on_addFrameButton_clicked();
+    model->SetCurrentImageIndex(0);
+
 
     GIFExport gifExport;
 
@@ -80,16 +120,54 @@ MainWindow::~MainWindow()
  */
 void MainWindow::on_addFrameButton_clicked()
 {
-    QPen pen(Qt::white, 3, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin);
-    QBrush brush; // Default brush does not fill in rectangle
-    QGraphicsScene scene;
-    scene.addRect(0,0,individualFrameWidth,individualFrameHeight,pen,brush);
-    QGraphicsView *view = new QGraphicsView(&scene);
-    view->setFixedSize(individualFrameWidth, individualFrameHeight);
-    view->show();
-    framesLayout->addWidget(view);
-    frameWidgets.push_back(view);
+    QPushButton *frameButton = new QPushButton(this);
+    frameButton->setGeometry(0,0,individualFrameWidth,individualFrameHeight);
+    QFont font("Helvetica",24);
+    frameButton->setFont(font);
+    QString buttonNum = QString::number(frameWidgets.size()+1);
+    frameButton->setText(buttonNum);
+    frameButton->setStyleSheet("background-color: white");
+    framesLayout->addWidget(frameButton);
+    frameWidgets.push_back(frameButton);
+    connect(frameButton, SIGNAL(clicked()), this, SLOT(on_frameButton_clicked()));
+
     model->AddImage();
+}
+
+
+/*
+ * Shows the selected frame on the canvas for modification
+ */
+void MainWindow::on_frameButton_clicked()
+{
+    // Get rid of border on previously selected frame button
+        // Add a border to the newly selected frame button
+        list<QPushButton*>::iterator it;
+        it = frameWidgets.begin();
+        int frameSelected = -1;
+        QObject *frameButtonObj = QObject::sender(); // the button that was clicked
+        QWidget *frameButton = qobject_cast<QWidget *>(frameButtonObj);
+        for(size_t i= 0; i < frameWidgets.size(); i++)
+        {
+            QPushButton *button = *it;
+            if((unsigned long)button == (unsigned long)frameButton)
+            {
+                frameSelected = i;
+                button->setStyleSheet("background-color: white; border-color: black; border-style: solid; border-width: 3px");
+            }
+
+            else
+            {
+                button->setStyleSheet("background-color:white");
+            }
+
+            advance(it,1);
+        }
+
+        //qDebug() << QString::number(frameSelected);
+
+        //Update model's current Image
+        model->SetCurrentImageIndex(frameSelected);
 }
 
 /*
@@ -97,24 +175,35 @@ void MainWindow::on_addFrameButton_clicked()
  */
 void MainWindow::on_deleteFrameButton_clicked()
 {
-    if(frameWidgets.size() > 0)
-    {
-        // Remove frame from GUI
-        list<QGraphicsView*>::iterator it;
-        it = frameWidgets.begin();
-        advance (it, model->GetCurrentImageIndex());
-        frameWidgets.erase(it);
-        QWidget *frame = *it;
-        layout()->removeWidget(frame);
-        delete frame;
+    if(frameWidgets.size() > 1)
+        {
+            // Remove frame from GUI
+            list<QPushButton*>::iterator it;
+            it = frameWidgets.begin();
+            advance (it, model->GetCurrentImageIndex());
+            frameWidgets.erase(it);
+            QWidget *frame = *it;
+            layout()->removeWidget(frame);
+            delete frame;
 
-        // Remove frame from model
-        model->RemoveImageAt(model->GetCurrentImageIndex());
-
-        qDebug() << frameWidgets.size();
+            // Remove frame from model
+            model->RemoveImageAt(model->GetCurrentImageIndex());
 
 
-    }
+            // Update frame button labels and put focus on the frame that came
+            // before the deleted frame
+            it = frameWidgets.begin();
+            for(size_t i = 0; i < frameWidgets.size(); i++)
+            {
+                QPushButton *button = *it;
+                button->setText(QString::number(i+1));
+                if(i == model->GetCurrentImageIndex())
+                    button->animateClick();
+
+                advance(it,1);
+            }
+
+        }
 }
 
 /*

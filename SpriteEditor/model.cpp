@@ -7,66 +7,97 @@ Model::Model(QGraphicsScene* scene,int screenheight,int screenwidth,int unitsize
     this->color = Vector4(0,0,0,255);
     DrawGrid(screenheight,screenwidth,unitsize);
     this->selectedSprite = new Sprite();
-    this->selectedImage = selectedSprite->GetImage(0);
     this->currentTool = "Pen";
+    this->screenheight = screenheight;
+    this->screenwidth = screenwidth;
+    this->mouseIsPressed = false;
 }
 
 // private methods
 
 void Model::Save()
 {
+    int cellCount = (screenheight/unitsize) * (screenwidth/unitsize);
+
     QString fileName = QFileDialog::getSaveFileName();
-
-    QString toSave = "";
-
+    QString colorDelim = " ";
     QFile file(fileName);
-
-    QTextStream stream( &file );
-
-
-
-//    Image current = this->selectedSprite->images.at(i);
-
-
-    // Get current layer and add it to string
-//    Layer temp = current.layers.at(i);
-//    Vector4* RGB = temp.pixels;
-
-    for (size_t i = 0; i < this->pixelmap.size(); i++)
-    {
-
-    }
+    int rowIndicator = screenwidth / unitsize;
 
     if ( file.open(QIODevice::ReadWrite) )
     {
-//        QString sep = ",";
-//        toSave = QString::number(RGB->r) + sep + QString::number(RGB->g) + sep + QString::number(RGB->b) + sep + QString::number(RGB->a);
-//        stream << toSave << "\n";
+        QTextStream stream( &file );
+
+        stream << screenwidth << " " << screenheight << "\n";
+        stream << selectedSprite->images.size() << "\n";
+        stream << unitsize << "\n";
+
+        for (size_t i = 0; i < selectedSprite->images.size(); i++){
+            Image* currentImage = selectedSprite->GetImage(i);
+
+            for (int k = 0; k < cellCount; k ++){
+                QColor currentColor = currentImage->GetPixelColorIndex(k);
+                stream <<  currentColor.red() << colorDelim;
+                stream <<  currentColor.green() << colorDelim;
+                stream <<  currentColor.blue() << colorDelim;
+                stream <<  currentColor.alpha();
+                if ((k+1) % rowIndicator == 0 && k !=0){
+                    stream << "\n";
+                }
+                else {
+                    stream << " ";
+                }
+            }
+
+        }
     }
-
-
-
-
-
+    file.close();
 }
 
 void Model::Open()
 {
-      qDebug() << "open" << endl;
-//    QString fileName = QFileDialog::getSaveFileName();
+    int frameCount = 0;
 
-//    QFile file(fileName);
-//    QTextStream in(&file);
+    QString filename = QFileDialog::getOpenFileName();
 
-//    // Ensure file is open
-//    if (!file.open(QIODevice::ReadOnly))
-//    {
-//        QMessageBox::information(0, "Error", file.errorString());
-//    }
-//    while(!in.atEnd())
-//    {
-//        QString line = in.readLine();
-//    }
+    QFile file(filename);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        return;
+
+    QString content = file.readAll();
+    QTextStream stream(&content);
+
+    this->selectedSprite->images.clear();
+
+    stream >> screenheight >> screenwidth >> frameCount >> unitsize;
+
+    int cellCount = (screenheight/unitsize) * (screenwidth/unitsize);
+
+    for(int i = 0; i < frameCount; i++){
+        selectedSprite->AddImage();
+        qDebug() << "Added Image";
+    }
+
+    while(!stream.atEnd()){
+        for (int i = 0; i < frameCount; i++){
+            this->selectedImage = selectedSprite->GetImage(i);
+            this->selectedImage->SetSize(screenwidth,screenheight, unitsize);
+            qDebug() << "Selected Image at index " <<i;
+            for (int k = 0; k < cellCount; k++){
+                int red;
+                int green;
+                int blue;
+                int alpha;
+                stream >> red >> green >> blue >> alpha;
+                qDebug() << red << green << blue << alpha;
+                QPoint point = selectedImage->IndexToPoint(k);
+                if((red+blue+green+alpha) !=0){
+                    penDraw(point.x(),point.y(),Vector4(red, green, blue, alpha));
+                }
+            }
+        }
+    }
+    file.close();
 }
 
 void Model::Export(Sprite sprite){;}
@@ -74,8 +105,8 @@ void Model::UpdateGUI(){;}
 
 void Model::DrawGrid(int imageheight, int imagewidth, int unitsize)
 {
-    int numberofverticallines = imageheight/unitsize;
-    int numberofhorizontallines = imagewidth/unitsize;
+    int numberofverticallines = imagewidth/unitsize;
+    int numberofhorizontallines = imageheight/unitsize;
 
     QPen outlinePen(Qt::black);
     outlinePen.setWidth(2);
@@ -101,11 +132,25 @@ void Model::RemoveImageAt(int index)
     selectedSprite->DeleteImage(index);
 }
 
-// Returns the index of the Sprite's image currently being modified
+/*
+ * Returns the index of the Sprite's image that's currently being modified
+ */
 int Model::GetCurrentImageIndex()
 {
     return selectedSprite->GetCurrentImageIndex();
 }
+
+/*
+ * Updates the index of the Sprite image currently being modified,
+ * and sets the model's Image pointer to that image
+ */
+void Model::SetCurrentImageIndex(int index)
+{
+    selectedImage = selectedSprite->SetCurrentImageIndex(index);
+    RedrawImage(index);
+}
+
+
 
 void Model::penDraw(int x, int y, Vector4 color)
 {
@@ -122,7 +167,7 @@ void Model::penDraw(int x, int y, Vector4 color)
      */
 
     stringstream posstring;
-    posstring << x << y;
+    posstring << x << " " << y;
 
     // Is the pixel already there?
     if(pixelmap[posstring.str()] == NULL)
@@ -135,6 +180,7 @@ void Model::penDraw(int x, int y, Vector4 color)
         pixelmap[posstring.str()]->setBrush(brush);
 
     this->selectedImage->AddPixel(QPoint(x,y),QColor(color.r, color.g, color.b, color.a));
+    this->selectedImage->AddPixelIndex(QPoint(x,y),QColor(color.r, color.g, color.b, color.a));
 
 }
 
@@ -175,7 +221,7 @@ void Model::erase(int x, int y)
 void Model::DeleteRect(int x, int y)
 {
     stringstream posstring;
-    posstring << x << y;
+    posstring << x << " " << y;
     if(pixelmap[posstring.str()] != NULL)
         pixelmap[posstring.str()]->setBrush(* new QBrush(QColor(0, 0, 0, 0)));
 
@@ -227,9 +273,13 @@ QPoint Model::GetCellLocation(QPointF point)
 
 }
 
-void Model::MouseClicked(QPointF point)
+void Model::MousePressed(QPointF point)
 {
+    if(point.x() < 0 || point.x() > screenwidth || point.y() < 0 || point.y() > screenheight)
+        return;
+
     QPoint cellloc = GetCellLocation(point);
+    this->mouseIsPressed = true;
 
     if (this->currentTool == "Pen")
     {
@@ -245,14 +295,73 @@ void Model::MouseClicked(QPointF point)
     }
 }
 
+/*
+ * Allows drag painting/erasing
+ */
 void Model::MouseMove(QPointF point)
 {
-   // qDebug() << "Mouse Move X= " << point.x() << " Y= " << point.y();
+   if(mouseIsPressed)
+       this->MousePressed(point);
 }
 
+/*
+ * Stop drag painting/erasing once user releases mouse
+ */
 void Model::MouseReleased(QPointF point)
 {
-
+    this->mouseIsPressed = false;
 }
 
 
+void Model::RedrawImage(int index)
+{
+
+    qDeleteAll( pixelmap );
+    pixelmap.clear();
+    scene->clear();
+
+
+    selectedImage = this->selectedSprite->GetImage(index);
+    DrawGrid(this->screenheight,this->screenwidth,this->unitsize);
+
+    for(int x = 0; x < screenheight/unitsize; x++)
+    {
+        for(int y = 0; y < screenwidth/unitsize; y++)
+        {
+            QColor newcolor = selectedImage->GetPixelColor(QPoint(x,y));
+            if(newcolor != QColor(0,0,0,0))
+                penDraw(x,y,Vector4(newcolor.red(),newcolor.green(),newcolor.blue(),newcolor.alpha()));
+        }
+    }
+
+}
+
+void Model::Preview()
+{
+
+    if(currentpreviewframe < selectedSprite->images.size())
+    {
+        RedrawImage(currentpreviewframe);
+        currentpreviewframe++;
+    }
+    else
+        currentpreviewframe = 0;
+
+}
+
+void Model::StartPreview()
+{
+    qDebug() << selectedSprite->images.size();
+    currentpreviewframe = 0;
+    previewtimer = new QTimer;
+    connect(previewtimer, SIGNAL(timeout()), this, SLOT(Preview()));
+    previewtimer->start(1000);
+}
+
+void Model::StopPreview()
+{
+    previewtimer->stop();
+    currentpreviewframe = 0;
+    RedrawImage(0);
+
+}

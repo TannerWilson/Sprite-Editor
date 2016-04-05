@@ -26,8 +26,16 @@ private:
     Sprite *selectedSprite;
     Image *selectedImage;
     Layer *selectedLayer;
-
     QGraphicsScene* scene;
+    int screenwidth;
+    int screenheight;
+
+    int currentpreviewframe;
+    QTimer *previewtimer;
+
+    QMap<string,QGraphicsRectItem*> pixelmap;
+
+    bool mouseIsPressed;
 
     // private methods
     void recursiveFill(int x, int y, QColor currentColor, QColor newColor);
@@ -35,7 +43,9 @@ private:
     void Export(Sprite);
     void UpdateGUI();
     void DrawGrid(int height, int width, int unitsize);
-    QMap<string,QGraphicsRectItem*> pixelmap;
+
+
+
 
 public:
     Model(QGraphicsScene* scene, int screenheight, int screenwidth, int unitsize);
@@ -44,11 +54,13 @@ public:
     void erase(int x, int y);
     void fill(int x, int y, Vector4 color);
 
+    void RedrawImage(int index);
     void DeleteRect(int x, int y);
     void AddLayer();
     void AddImage();
     void RemoveImageAt(int index);
     int GetCurrentImageIndex();
+    void SetCurrentImageIndex(int index);
     QPoint GetCellLocation(QPointF point);
     int unitsize;
     Vector4 color;
@@ -56,11 +68,14 @@ public:
     QString currentTool;
 
 public slots:
-    void MouseClicked(QPointF point);
+    void MousePressed(QPointF point);
     void MouseMove(QPointF point);
     void MouseReleased(QPointF point);
     void Save();
     void Open();
+    void StartPreview();
+    void StopPreview();
+    void Preview();
 
 };
 

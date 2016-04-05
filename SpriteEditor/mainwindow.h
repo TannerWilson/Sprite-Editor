@@ -4,6 +4,7 @@
 #include "model.h"
 #include <QMainWindow>
 #include <QVBoxLayout>
+#include <QPushButton>
 #include "vector.h"
 #include <QGraphicsScene>
 #include <QGraphicsView>
@@ -28,7 +29,7 @@ private:
     QVBoxLayout *graphicslayout;
     int individualFrameWidth = 80;
     int individualFrameHeight = 80;
-    std::list<QGraphicsView*> frameWidgets;
+    std::list<QPushButton*> frameWidgets;
     SpriteGraphicsView* spritegraphicsview;
     QGraphicsScene* scene;
     Model* model;
@@ -42,9 +43,9 @@ private slots:
 
     void on_addFrameButton_clicked();
 
+    void on_frameButton_clicked();
+
     void on_primaryColorButton_clicked();
-
-
 
     void on_deleteFrameButton_clicked();
 
