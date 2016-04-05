@@ -48,6 +48,7 @@ public:
     void AddImage();
     void RemoveImageAt(int index);
     int GetCurrentImageIndex();
+    void SetCurrentImageIndex(int index);
     QPoint GetCellLocation(QPointF point);
     int unitsize;
     Vector4 color;

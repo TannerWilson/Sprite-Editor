@@ -101,11 +101,25 @@ void Model::RemoveImageAt(int index)
     selectedSprite->DeleteImage(index);
 }
 
-// Returns the index of the Sprite's image currently being modified
+/*
+ * Returns the index of the Sprite's image that's currently being modified
+ */
 int Model::GetCurrentImageIndex()
 {
     return selectedSprite->GetCurrentImageIndex();
 }
+
+/*
+ * Updates the index of the Sprite image currently being modified,
+ * and sets the model's Image pointer to that image
+ */
+void Model::SetCurrentImageIndex(int index)
+{
+    selectedImage = selectedSprite->SetCurrentImageIndex(index);
+
+}
+
+
 
 void Model::penDraw(int x, int y, Vector4 color)
 {

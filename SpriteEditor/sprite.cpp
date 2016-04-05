@@ -27,3 +27,9 @@ int Sprite::GetCurrentImageIndex()
 {
     return currentImageIndex;
 }
+
+Image* Sprite::SetCurrentImageIndex(int index)
+{
+    currentImageIndex = index;
+    return images[index];
+}
