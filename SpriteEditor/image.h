@@ -13,12 +13,14 @@ using namespace std;
 
 class Image
 {
+private:
+    QMap<string,QColor> pixels;
+
 public:
     Image();
     QColor GetPixelColor(QPoint point);
     void AddPixel(QPoint point, QColor color);
     void ClearPixel(QPoint point);
-private:
-    QMap<string,QColor> pixels;
+
 };
 #endif // IMAGE_H

@@ -84,7 +84,33 @@ void MainWindow::on_addFrameButton_clicked()
     view->setFixedSize(individualFrameWidth, individualFrameHeight);
     view->show();
     framesLayout->addWidget(view);
-    //framesLayout->addStretch(1);
+    frameWidgets.push_back(view);
+    model->AddImage();
+}
+
+/*
+ * Removes the selected frame from the Sprite.
+ */
+void MainWindow::on_deleteFrameButton_clicked()
+{
+    if(frameWidgets.size() > 0)
+    {
+        // Remove frame from GUI
+        list<QGraphicsView*>::iterator it;
+        it = frameWidgets.begin();
+        advance (it, model->GetCurrentImageIndex());
+        frameWidgets.erase(it);
+        QWidget *frame = *it;
+        layout()->removeWidget(frame);
+        delete frame;
+
+        // Remove frame from model
+        model->RemoveImageAt(model->GetCurrentImageIndex());
+
+        qDebug() << frameWidgets.size();
+
+
+    }
 }
 
 /*
@@ -130,5 +156,6 @@ void MainWindow::on_secondaryColorButton_clicked()
     model->color = temp2;
     model->secondaryColor = temp;
 }
+
 
 

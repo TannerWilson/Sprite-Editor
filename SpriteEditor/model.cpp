@@ -90,7 +90,21 @@ void Model::DrawGrid(int imageheight, int imagewidth, int unitsize)
 
 void Model::AddLayer(){;}
 
-void Model::AddImage(){;}
+void Model::AddImage()
+{
+    selectedSprite->AddImage();
+}
+
+void Model::RemoveImageAt(int index)
+{
+    selectedSprite->DeleteImage(index);
+}
+
+// Returns the index of the Sprite's image currently being modified
+int Model::GetCurrentImageIndex()
+{
+    return selectedSprite->GetCurrentImageIndex();
+}
 
 void Model::Draw(int x, int y, Vector4 color)
 {

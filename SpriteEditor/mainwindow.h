@@ -6,6 +6,7 @@
 #include <QVBoxLayout>
 #include "vector.h"
 #include <QGraphicsScene>
+#include <QGraphicsView>
 #include "model.h"
 #include "spritegraphicsview.h"
 #include <QPointF>
@@ -27,6 +28,7 @@ private:
     QVBoxLayout *graphicslayout;
     int individualFrameWidth = 80;
     int individualFrameHeight = 80;
+    std::list<QGraphicsView*> frameWidgets;
     SpriteGraphicsView* spritegraphicsview;
     QGraphicsScene* scene;
     Model* model;
@@ -43,6 +45,8 @@ private slots:
     void on_primaryColorButton_clicked();
 
 
+
+    void on_deleteFrameButton_clicked();
 
 public:
     explicit MainWindow(QWidget *parent = 0);

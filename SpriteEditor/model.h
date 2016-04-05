@@ -34,9 +34,7 @@ private:
 
     void Export(Sprite);
     void UpdateGUI();
-
     void DrawGrid(int height, int width, int unitsize);
-
     QMap<string,QGraphicsRectItem*> pixelmap;
 
 public:
@@ -46,6 +44,8 @@ public:
     void DeleteRect(int x, int y);
     void AddLayer();
     void AddImage();
+    void RemoveImageAt(int index);
+    int GetCurrentImageIndex();
     QPoint GetCellLocation(QPointF point);
     int unitsize;
     Vector4 color;
