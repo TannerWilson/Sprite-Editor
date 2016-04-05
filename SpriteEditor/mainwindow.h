@@ -48,6 +48,12 @@ private slots:
 
     void on_deleteFrameButton_clicked();
 
+    void on_brushButton_clicked();
+
+    void on_eraserButton_clicked();
+
+    void on_bucketButton_clicked();
+
 public:
     explicit MainWindow(QWidget *parent = 0);
     void AddRect(float x, float y, float height, float width, Vector4 color);

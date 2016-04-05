@@ -159,3 +159,20 @@ void MainWindow::on_secondaryColorButton_clicked()
 
 
 
+
+void MainWindow::on_brushButton_clicked()
+{
+    this->model->currentTool = "Pen";
+    this->setCursor(Qt::WaitCursor);
+    this->ui->brushButton->setStyleSheet("border:2px solid black; background-color:#999999");
+}
+
+void MainWindow::on_eraserButton_clicked()
+{
+    this->model->currentTool = "Eraser";
+}
+
+void MainWindow::on_bucketButton_clicked()
+{
+    this->model->currentTool = "Bucket";
+}

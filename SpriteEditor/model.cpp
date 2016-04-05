@@ -8,6 +8,7 @@ Model::Model(QGraphicsScene* scene,int screenheight,int screenwidth,int unitsize
     DrawGrid(screenheight,screenwidth,unitsize);
     this->selectedSprite = new Sprite();
     this->selectedImage = selectedSprite->GetImage(0);
+    this->currentTool = "Pen";
 }
 
 // private methods
@@ -106,7 +107,7 @@ int Model::GetCurrentImageIndex()
     return selectedSprite->GetCurrentImageIndex();
 }
 
-void Model::Draw(int x, int y, Vector4 color)
+void Model::penDraw(int x, int y, Vector4 color)
 {
 
     // Outline
@@ -134,6 +135,16 @@ void Model::Draw(int x, int y, Vector4 color)
         pixelmap[posstring.str()]->setBrush(brush);
 
     this->selectedImage->AddPixel(QPoint(x,y),QColor(color.r, color.g, color.b, color.a));
+
+}
+
+void Model::erase(int x, int y)
+{
+    this->DeleteRect(x, y);
+}
+
+void Model::fill(int x, int y, Vector4 color)
+{
 
 }
 
@@ -195,11 +206,19 @@ QPoint Model::GetCellLocation(QPointF point)
 void Model::MouseClicked(QPointF point)
 {
     QPoint cellloc = GetCellLocation(point);
-    this->Draw(cellloc.x(),cellloc.y(),this->color);
-    qDebug() << this->color.r;
-    qDebug() << this->color.g;
-    qDebug() << this->color.b;
-    qDebug() << this->color.a;
+
+    if (this->currentTool == "Pen")
+    {
+        this->penDraw(cellloc.x(),cellloc.y(),this->color);
+    }
+    else if (this->currentTool == "Eraser")
+    {
+        this->erase(cellloc.x(), cellloc.y());
+    }
+    else if (this->currentTool == "Bucket")
+    {
+        this->fill(cellloc.x(), cellloc.y(), this->color);
+    }
 }
 
 void Model::MouseMove(QPointF point)

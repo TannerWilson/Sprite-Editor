@@ -26,7 +26,6 @@ private:
     Sprite *selectedSprite;
     Image *selectedImage;
     Layer *selectedLayer;
-    Tool *currentTool;
 
     QGraphicsScene* scene;
 
@@ -40,7 +39,10 @@ private:
 public:
     Model(QGraphicsScene* scene, int screenheight, int screenwidth, int unitsize);
     Model();
-    void Draw(int x, int y, Vector4 color);
+    void penDraw(int x, int y, Vector4 color);
+    void erase(int x, int y);
+    void fill(int x, int y, Vector4 color);
+
     void DeleteRect(int x, int y);
     void AddLayer();
     void AddImage();
@@ -50,6 +52,7 @@ public:
     int unitsize;
     Vector4 color;
     Vector4 secondaryColor;
+    QString currentTool;
 
 public slots:
     void MouseClicked(QPointF point);

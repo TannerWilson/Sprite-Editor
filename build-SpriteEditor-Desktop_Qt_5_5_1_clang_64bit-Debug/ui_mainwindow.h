@@ -121,15 +121,17 @@ public:
 
         frameContainer = new QScrollArea(centralWidget);
         frameContainer->setObjectName(QStringLiteral("frameContainer"));
-        frameContainer->setGeometry(QRect(10, 381, 104, 291));
+        frameContainer->setGeometry(QRect(5, 381, 111, 275));
+        frameContainer->setMaximumSize(QSize(16777215, 16777215));
+        frameContainer->setLayoutDirection(Qt::LeftToRight);
         frameContainer->setWidgetResizable(true);
         frameContents = new QWidget();
         frameContents->setObjectName(QStringLiteral("frameContents"));
-        frameContents->setGeometry(QRect(0, 0, 102, 289));
+        frameContents->setGeometry(QRect(0, 0, 109, 273));
         frameContainer->setWidget(frameContents);
         deleteFrameButton = new QPushButton(centralWidget);
         deleteFrameButton->setObjectName(QStringLiteral("deleteFrameButton"));
-        deleteFrameButton->setGeometry(QRect(10, 895, 104, 40));
+        deleteFrameButton->setGeometry(QRect(10, 740, 104, 40));
         QIcon icon3;
         icon3.addFile(QStringLiteral(":/imgs/Resources_External/trash_black.png"), QSize(), QIcon::Normal, QIcon::Off);
         deleteFrameButton->setIcon(icon3);
@@ -176,7 +178,7 @@ public:
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1199, 25));
+        menuBar->setGeometry(QRect(0, 0, 1199, 21));
         menuFile = new QMenu(menuBar);
         menuFile->setObjectName(QStringLiteral("menuFile"));
         MainWindow->setMenuBar(menuBar);
