@@ -64,6 +64,11 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionSave, SIGNAL(triggered()), model, SLOT(Save()));
     connect(ui->actionOpen, SIGNAL(triggered()), model, SLOT(Open()));
 
+    // pen is default tool
+    this->ui->brushButton->setStyleSheet("border:2px solid black; background-color:#999999");
+    this->ui->eraserButton->setStyleSheet("border:0; background-color:none");
+    this->ui->bucketButton->setStyleSheet("border:0; background-color:none");
+
 }
 
 MainWindow::~MainWindow()
@@ -163,16 +168,24 @@ void MainWindow::on_secondaryColorButton_clicked()
 void MainWindow::on_brushButton_clicked()
 {
     this->model->currentTool = "Pen";
-    this->setCursor(Qt::WaitCursor);
+    //this->setCursor(Qt::WaitCursor);
     this->ui->brushButton->setStyleSheet("border:2px solid black; background-color:#999999");
+    this->ui->eraserButton->setStyleSheet("border:0; background-color:none");
+    this->ui->bucketButton->setStyleSheet("border:0; background-color:none");
 }
 
 void MainWindow::on_eraserButton_clicked()
 {
     this->model->currentTool = "Eraser";
+    this->ui->eraserButton->setStyleSheet("border:2px solid black; background-color:#999999");
+    this->ui->brushButton->setStyleSheet("border:0; background-color:none");
+    this->ui->bucketButton->setStyleSheet("border:0; background-color:none");
 }
 
 void MainWindow::on_bucketButton_clicked()
 {
     this->model->currentTool = "Bucket";
+    this->ui->bucketButton->setStyleSheet("border:2px solid black; background-color:#999999");
+    this->ui->eraserButton->setStyleSheet("border:0; background-color:none");
+    this->ui->brushButton->setStyleSheet("border:0; background-color:none");
 }
