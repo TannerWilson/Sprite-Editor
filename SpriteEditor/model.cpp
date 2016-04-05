@@ -77,8 +77,8 @@ void Model::UpdateGUI(){;}
 
 void Model::DrawGrid(int imageheight, int imagewidth, int unitsize)
 {
-    int numberofverticallines = imageheight/unitsize;
-    int numberofhorizontallines = imagewidth/unitsize;
+    int numberofverticallines = imagewidth/unitsize;
+    int numberofhorizontallines = imageheight/unitsize;
 
     QPen outlinePen(Qt::black);
     outlinePen.setWidth(2);
@@ -222,6 +222,9 @@ QPoint Model::GetCellLocation(QPointF point)
 
 void Model::MousePressed(QPointF point)
 {
+    if(point.x() < 0 || point.x() > screenwidth || point.y() < 0 || point.y() > screenheight)
+        return;
+
     QPoint cellloc = GetCellLocation(point);
     this->mouseIsPressed = true;
 

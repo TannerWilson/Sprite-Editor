@@ -20,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ScreenHeight = 1000;
     ScreenWidth = 1000;
 
+
     // Set up stuff for the part of the GUI that allows you to add image frames,
     // browse image frames, etc.
     framesLayout = new QVBoxLayout(ui->frameContents);
@@ -32,6 +33,37 @@ MainWindow::MainWindow(QWidget *parent) :
     // Set the primary and secondary color choices
     ui->primaryColorButton->setStyleSheet("background-color: black");
     ui->secondaryColorButton->setStyleSheet("background-color: white");
+
+
+    // set up screen width and height
+    while(true)
+    {
+        ScreenHeight = QInputDialog::getInt(0, "Select Height","Input the desired height of your sprite", 1) * 25;
+
+        if(ScreenHeight < 25 || ScreenHeight > 51200)
+        {
+            QMessageBox::information(
+                this,
+                tr("Error"),
+                tr("Please input a value from 1 to 2048") );
+        }
+        else break;
+    }
+
+    while(true)
+    {
+        ScreenWidth = QInputDialog::getInt(0, "Select Width","Input the desired width of your sprite", 1) * 25;
+
+        if(ScreenWidth < 25 || ScreenWidth > 51200)
+       {
+            QMessageBox::information(
+                this,
+                tr("Error"),
+                tr("Please input a value from 1 to 2048") );
+        }
+        else break;
+    }
+
 
     // Set up graphics scene for drawing
     scene = new QGraphicsScene(this);
