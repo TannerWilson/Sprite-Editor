@@ -30,7 +30,8 @@ private:
     QGraphicsScene* scene;
 
     // private methods
-
+    void recursiveFill(int x, int y, QColor currentColor, QColor newColor);
+    bool colorEquals(Vector4 vectorColor, QColor color);
     void Export(Sprite);
     void UpdateGUI();
     void DrawGrid(int height, int width, int unitsize);

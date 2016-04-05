@@ -138,14 +138,38 @@ void Model::penDraw(int x, int y, Vector4 color)
 
 }
 
+void Model::fill(int x, int y, Vector4 color)
+{
+    if (x > 0 && y > 0)
+    {
+        stringstream ss;
+        ss << x << y;
+        QColor originalColor = this->selectedImage->getPixels()[ss.str()];
+        QColor newColor(color.r, color.g, color.b, color.a);
+        recursiveFill(x, y, originalColor, newColor);
+    }
+}
+
+void Model::recursiveFill(int x, int y, QColor originalColor, QColor newColor)
+{
+    stringstream ss;
+    ss << x << y;
+    QColor currentColor = this->selectedImage->getPixels()[ss.str()];
+
+    if (newColor != currentColor && originalColor == currentColor)
+    {
+        penDraw(x, y, Vector4(newColor.red(), newColor.green(), newColor.blue(), newColor.alpha()));
+        recursiveFill(x, y, originalColor, newColor);
+        recursiveFill(x-1, y, originalColor, newColor);
+        recursiveFill(x+1, y, originalColor, newColor);
+        recursiveFill(x, y-1, originalColor, newColor);
+        recursiveFill(x, y+1, originalColor, newColor);
+    }
+}
+
 void Model::erase(int x, int y)
 {
     this->DeleteRect(x, y);
-}
-
-void Model::fill(int x, int y, Vector4 color)
-{
-
 }
 
 void Model::DeleteRect(int x, int y)

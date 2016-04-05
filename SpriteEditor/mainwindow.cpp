@@ -68,7 +68,6 @@ MainWindow::MainWindow(QWidget *parent) :
     on_brushButton_clicked();
     this->ui->eraserButton->setStyleSheet("border:0; background-color:none");
     this->ui->bucketButton->setStyleSheet("border:0; background-color:none");
-
 }
 
 MainWindow::~MainWindow()
@@ -161,8 +160,6 @@ void MainWindow::on_secondaryColorButton_clicked()
     model->color = temp2;
     model->secondaryColor = temp;
 }
-
-
 
 
 void MainWindow::on_brushButton_clicked()

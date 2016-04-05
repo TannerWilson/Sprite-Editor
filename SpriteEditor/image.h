@@ -21,6 +21,7 @@ public:
     QColor GetPixelColor(QPoint point);
     void AddPixel(QPoint point, QColor color);
     void ClearPixel(QPoint point);
+    QMap<string,QColor> getPixels() { return pixels; }
 
 };
 #endif // IMAGE_H
