@@ -65,7 +65,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionOpen, SIGNAL(triggered()), model, SLOT(Open()));
 
     // pen is default tool
-    this->ui->brushButton->setStyleSheet("border:2px solid black; background-color:#999999");
+    on_brushButton_clicked();
     this->ui->eraserButton->setStyleSheet("border:0; background-color:none");
     this->ui->bucketButton->setStyleSheet("border:0; background-color:none");
 
@@ -172,6 +172,10 @@ void MainWindow::on_brushButton_clicked()
     this->ui->brushButton->setStyleSheet("border:2px solid black; background-color:#999999");
     this->ui->eraserButton->setStyleSheet("border:0; background-color:none");
     this->ui->bucketButton->setStyleSheet("border:0; background-color:none");
+
+    QPixmap map("/Users/Gradey/Repositories/u0930231/SpriteEditor/Resources_External/brush_black.png");
+    map = map.scaled(35,35);
+    setCursor(map);
 }
 
 void MainWindow::on_eraserButton_clicked()
@@ -180,6 +184,10 @@ void MainWindow::on_eraserButton_clicked()
     this->ui->eraserButton->setStyleSheet("border:2px solid black; background-color:#999999");
     this->ui->brushButton->setStyleSheet("border:0; background-color:none");
     this->ui->bucketButton->setStyleSheet("border:0; background-color:none");
+
+    QPixmap map("/Users/Gradey/Repositories/u0930231/SpriteEditor/Resources_External/eraser_black.png");
+    map = map.scaled(35,35);
+    setCursor(map);
 }
 
 void MainWindow::on_bucketButton_clicked()
@@ -188,4 +196,8 @@ void MainWindow::on_bucketButton_clicked()
     this->ui->bucketButton->setStyleSheet("border:2px solid black; background-color:#999999");
     this->ui->eraserButton->setStyleSheet("border:0; background-color:none");
     this->ui->brushButton->setStyleSheet("border:0; background-color:none");
+
+    QPixmap map("/Users/Gradey/Repositories/u0930231/SpriteEditor/Resources_External/fill_black.png");
+    map = map.scaled(35,35);
+    setCursor(map);
 }
