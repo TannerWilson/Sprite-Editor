@@ -51,7 +51,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Connect mouse signals and slots
     connect (spritegraphicsview, SIGNAL(MouseMoveSignal(QPointF)),model, SLOT(MouseMove(QPointF)));
-    connect(spritegraphicsview, SIGNAL(MouseClickedSignal(QPointF)), model, SLOT(MouseClicked(QPointF)));
+    connect(spritegraphicsview, SIGNAL(MousePressSignal(QPointF)), model, SLOT(MousePressed(QPointF)));
     connect(spritegraphicsview, SIGNAL(MouseReleaseSignal(QPointF)), model, SLOT(MouseReleased(QPointF)));
 
     // Add the spritegraphicsview to the layout
@@ -99,6 +99,10 @@ void MainWindow::on_addFrameButton_clicked()
     model->AddImage();
 }
 
+
+/*
+ * Shows the selected frame on the canvas for modification
+ */
 void MainWindow::on_frameButton_clicked()
 {
     // Get rid of border on previously selected frame button
@@ -151,7 +155,7 @@ void MainWindow::on_deleteFrameButton_clicked()
             model->RemoveImageAt(model->GetCurrentImageIndex());
 
 
-            //Update frame button labels and put focus on the frame that came
+            // Update frame button labels and put focus on the frame that came
             // before the deleted frame
             it = frameWidgets.begin();
             for(size_t i = 0; i < frameWidgets.size(); i++)

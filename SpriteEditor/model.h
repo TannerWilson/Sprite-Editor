@@ -26,18 +26,20 @@ private:
     Sprite *selectedSprite;
     Image *selectedImage;
     Layer *selectedLayer;
-
     QGraphicsScene* scene;
+    int screenwidth;
+    int screenheight;
+    QMap<string,QGraphicsRectItem*> pixelmap;
+    bool mouseIsPressed;
 
     // private methods
 
     void Export(Sprite);
     void UpdateGUI();
     void DrawGrid(int height, int width, int unitsize);
-    QMap<string,QGraphicsRectItem*> pixelmap;
 
-    int screenwidth;
-    int screenheight;
+
+
 
 public:
     Model(QGraphicsScene* scene, int screenheight, int screenwidth, int unitsize);
@@ -60,7 +62,7 @@ public:
     QString currentTool;
 
 public slots:
-    void MouseClicked(QPointF point);
+    void MousePressed(QPointF point);
     void MouseMove(QPointF point);
     void MouseReleased(QPointF point);
     void Save();

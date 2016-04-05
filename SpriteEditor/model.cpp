@@ -11,6 +11,7 @@ Model::Model(QGraphicsScene* scene,int screenheight,int screenwidth,int unitsize
     this->currentTool = "Pen";
     this->screenheight = screenheight;
     this->screenwidth = screenwidth;
+    this->mouseIsPressed = false;
 }
 
 // private methods
@@ -219,9 +220,10 @@ QPoint Model::GetCellLocation(QPointF point)
 
 }
 
-void Model::MouseClicked(QPointF point)
+void Model::MousePressed(QPointF point)
 {
     QPoint cellloc = GetCellLocation(point);
+    this->mouseIsPressed = true;
 
     if (this->currentTool == "Pen")
     {
@@ -237,14 +239,21 @@ void Model::MouseClicked(QPointF point)
     }
 }
 
+/*
+ * Allows drag painting/erasing
+ */
 void Model::MouseMove(QPointF point)
 {
-   // qDebug() << "Mouse Move X= " << point.x() << " Y= " << point.y();
+   if(mouseIsPressed)
+       this->MousePressed(point);
 }
 
+/*
+ * Stop drag painting/erasing once user releases mouse
+ */
 void Model::MouseReleased(QPointF point)
 {
-
+    this->mouseIsPressed = false;
 }
 
 
