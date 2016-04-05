@@ -26,38 +26,38 @@ private:
     Ui::MainWindow *ui;
 
     QVBoxLayout *framesLayout; //Used to nicely order the preview frames in the GUI
-    QVBoxLayout *graphicslayout;
+    QVBoxLayout *graphicsLayout;
     int individualFrameWidth = 80;
     int individualFrameHeight = 80;
     std::list<QPushButton*> frameWidgets;
-    SpriteGraphicsView* spritegraphicsview;
+    SpriteGraphicsView* spriteGraphicsView;
     QGraphicsScene* scene;
     Model* model;
-    void DrawGrid(int imageheight,int imagewidth, int unitsize);
+    void drawGrid(int imageheight,int imagewidth, int unitsize);
 
-    int ScreenWidth;
-    int ScreenHeight;
+    int screenWidth;
+    int screenHeight;
 
 private slots:
-    void on_secondaryColorButton_clicked();
+    void onSecondaryColorButtonClicked();
 
-    void on_addFrameButton_clicked();
+    void onAddFrameButtonClicked();
 
-    void on_frameButton_clicked();
+    void onFrameButtonClicked();
 
-    void on_primaryColorButton_clicked();
+    void onPrimaryColorButtonClicked();
 
-    void on_deleteFrameButton_clicked();
+    void onDeleteFrameButtonClicked();
 
-    void on_brushButton_clicked();
+    void onBrushButtonClicked();
 
-    void on_eraserButton_clicked();
+    void onEraserButtonClicked();
 
-    void on_bucketButton_clicked();
+    void onBucketButtonClicked();
 
 public:
     explicit MainWindow(QWidget *parent = 0);
-    void AddRect(float x, float y, float height, float width, Vector4 color);
+    void addRect(float x, float y, float height, float width, Vector4 color);
 
     ~MainWindow();
 };
