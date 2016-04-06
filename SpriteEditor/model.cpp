@@ -182,6 +182,12 @@ void Model::penDraw(int x, int y, Vector4 color)
     this->selectedImage->AddPixel(QPoint(x,y),QColor(color.r, color.g, color.b, color.a));
     this->selectedImage->AddPixelIndex(QPoint(x,y),QColor(color.r, color.g, color.b, color.a));
 
+//    qDebug() << "x: " << x;
+//    qDebug() << "y: " << y;
+//    qDebug() << "screen width: " << this->screenwidth / this->unitsize;
+//    qDebug() << "screen height: " << this->screenheight / this->unitsize;
+
+
 }
 
 void Model::fill(int x, int y, Vector4 color)
@@ -202,7 +208,8 @@ void Model::recursiveFill(int x, int y, QColor originalColor, QColor newColor)
     ss << x << y;
     QColor currentColor = this->selectedImage->getPixels()[ss.str()];
 
-    if (newColor != currentColor && originalColor == currentColor)
+    if (newColor != currentColor && originalColor == currentColor
+            && x < (this->screenwidth / this->unitsize) && y < (this->screenheight / this->unitsize))
     {
         penDraw(x, y, Vector4(newColor.red(), newColor.green(), newColor.blue(), newColor.alpha()));
         recursiveFill(x, y, originalColor, newColor);

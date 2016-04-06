@@ -14,14 +14,14 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QFrame>
-#include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QScrollArea>
-#include <QtWidgets/QSlider>
+#include <QtWidgets/QSpinBox>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
@@ -46,13 +46,14 @@ public:
     QWidget *frameContents;
     QPushButton *deleteFrameButton;
     QPushButton *addFrameButton;
-    QWidget *previewContainer;
-    QVBoxLayout *verticalLayout_2;
-    QGraphicsView *previewView;
-    QSlider *fpsSlider;
     QPushButton *secondaryColorButton;
     QPushButton *primaryColorButton;
     QFrame *graphicsframe;
+    QPushButton *StartPreview;
+    QPushButton *StopPreview;
+    QSpinBox *spinBox;
+    QLabel *label;
+    QLabel *label_2;
     QMenuBar *menuBar;
     QMenu *menuFile;
     QStatusBar *statusBar;
@@ -61,7 +62,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(1199, 933);
+        MainWindow->resize(1199, 963);
         MainWindow->setMouseTracking(true);
         MainWindow->setAnimated(true);
         actionOpen = new QAction(MainWindow);
@@ -145,24 +146,6 @@ public:
         addFrameButton->setIcon(icon4);
         addFrameButton->setIconSize(QSize(24, 24));
         addFrameButton->setFlat(false);
-        previewContainer = new QWidget(centralWidget);
-        previewContainer->setObjectName(QStringLiteral("previewContainer"));
-        previewContainer->setGeometry(QRect(980, 10, 210, 245));
-        verticalLayout_2 = new QVBoxLayout(previewContainer);
-        verticalLayout_2->setSpacing(6);
-        verticalLayout_2->setContentsMargins(11, 11, 11, 11);
-        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
-        previewView = new QGraphicsView(previewContainer);
-        previewView->setObjectName(QStringLiteral("previewView"));
-
-        verticalLayout_2->addWidget(previewView);
-
-        fpsSlider = new QSlider(previewContainer);
-        fpsSlider->setObjectName(QStringLiteral("fpsSlider"));
-        fpsSlider->setOrientation(Qt::Horizontal);
-
-        verticalLayout_2->addWidget(fpsSlider);
-
         secondaryColorButton = new QPushButton(centralWidget);
         secondaryColorButton->setObjectName(QStringLiteral("secondaryColorButton"));
         secondaryColorButton->setGeometry(QRect(40, 300, 61, 51));
@@ -175,6 +158,21 @@ public:
         graphicsframe->setGeometry(QRect(120, 20, 851, 871));
         graphicsframe->setFrameShape(QFrame::StyledPanel);
         graphicsframe->setFrameShadow(QFrame::Raised);
+        StartPreview = new QPushButton(centralWidget);
+        StartPreview->setObjectName(QStringLiteral("StartPreview"));
+        StartPreview->setGeometry(QRect(10, 820, 90, 26));
+        StopPreview = new QPushButton(centralWidget);
+        StopPreview->setObjectName(QStringLiteral("StopPreview"));
+        StopPreview->setGeometry(QRect(10, 850, 90, 26));
+        spinBox = new QSpinBox(centralWidget);
+        spinBox->setObjectName(QStringLiteral("spinBox"));
+        spinBox->setGeometry(QRect(50, 880, 48, 25));
+        label = new QLabel(centralWidget);
+        label->setObjectName(QStringLiteral("label"));
+        label->setGeometry(QRect(30, 800, 61, 15));
+        label_2 = new QLabel(centralWidget);
+        label_2->setObjectName(QStringLiteral("label_2"));
+        label_2->setGeometry(QRect(10, 880, 31, 16));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -226,6 +224,10 @@ public:
 "frame", 0));
         secondaryColorButton->setText(QString());
         primaryColorButton->setText(QString());
+        StartPreview->setText(QApplication::translate("MainWindow", "Start", 0));
+        StopPreview->setText(QApplication::translate("MainWindow", "Stop", 0));
+        label->setText(QApplication::translate("MainWindow", "Preview", 0));
+        label_2->setText(QApplication::translate("MainWindow", "FPS", 0));
         menuFile->setTitle(QApplication::translate("MainWindow", "File", 0));
     } // retranslateUi
 

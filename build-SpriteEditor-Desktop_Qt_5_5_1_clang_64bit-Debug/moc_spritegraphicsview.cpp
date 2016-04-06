@@ -20,7 +20,7 @@
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_SpriteGraphicsView_t {
     QByteArrayData data[11];
-    char stringdata0[148];
+    char stringdata0[146];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -33,17 +33,17 @@ QT_MOC_LITERAL(0, 0, 18), // "SpriteGraphicsView"
 QT_MOC_LITERAL(1, 19, 15), // "MouseMoveSignal"
 QT_MOC_LITERAL(2, 35, 0), // ""
 QT_MOC_LITERAL(3, 36, 5), // "point"
-QT_MOC_LITERAL(4, 42, 18), // "MouseClickedSignal"
-QT_MOC_LITERAL(5, 61, 18), // "MouseReleaseSignal"
-QT_MOC_LITERAL(6, 80, 15), // "mousePressEvent"
-QT_MOC_LITERAL(7, 96, 12), // "QMouseEvent*"
-QT_MOC_LITERAL(8, 109, 5), // "event"
-QT_MOC_LITERAL(9, 115, 14), // "mouseMoveEvent"
-QT_MOC_LITERAL(10, 130, 17) // "mouseReleaseEvent"
+QT_MOC_LITERAL(4, 42, 16), // "MousePressSignal"
+QT_MOC_LITERAL(5, 59, 18), // "MouseReleaseSignal"
+QT_MOC_LITERAL(6, 78, 15), // "mousePressEvent"
+QT_MOC_LITERAL(7, 94, 12), // "QMouseEvent*"
+QT_MOC_LITERAL(8, 107, 5), // "event"
+QT_MOC_LITERAL(9, 113, 14), // "mouseMoveEvent"
+QT_MOC_LITERAL(10, 128, 17) // "mouseReleaseEvent"
 
     },
     "SpriteGraphicsView\0MouseMoveSignal\0\0"
-    "point\0MouseClickedSignal\0MouseReleaseSignal\0"
+    "point\0MousePressSignal\0MouseReleaseSignal\0"
     "mousePressEvent\0QMouseEvent*\0event\0"
     "mouseMoveEvent\0mouseReleaseEvent"
 };
@@ -92,7 +92,7 @@ void SpriteGraphicsView::qt_static_metacall(QObject *_o, QMetaObject::Call _c, i
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->MouseMoveSignal((*reinterpret_cast< QPointF(*)>(_a[1]))); break;
-        case 1: _t->MouseClickedSignal((*reinterpret_cast< QPointF(*)>(_a[1]))); break;
+        case 1: _t->MousePressSignal((*reinterpret_cast< QPointF(*)>(_a[1]))); break;
         case 2: _t->MouseReleaseSignal((*reinterpret_cast< QPointF(*)>(_a[1]))); break;
         case 3: _t->mousePressEvent((*reinterpret_cast< QMouseEvent*(*)>(_a[1]))); break;
         case 4: _t->mouseMoveEvent((*reinterpret_cast< QMouseEvent*(*)>(_a[1]))); break;
@@ -110,7 +110,7 @@ void SpriteGraphicsView::qt_static_metacall(QObject *_o, QMetaObject::Call _c, i
         }
         {
             typedef void (SpriteGraphicsView::*_t)(QPointF );
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&SpriteGraphicsView::MouseClickedSignal)) {
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&SpriteGraphicsView::MousePressSignal)) {
                 *result = 1;
             }
         }
@@ -167,7 +167,7 @@ void SpriteGraphicsView::MouseMoveSignal(QPointF _t1)
 }
 
 // SIGNAL 1
-void SpriteGraphicsView::MouseClickedSignal(QPointF _t1)
+void SpriteGraphicsView::MousePressSignal(QPointF _t1)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 1, _a);

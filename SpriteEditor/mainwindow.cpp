@@ -259,7 +259,8 @@ void MainWindow::on_brushButton_clicked()
     this->ui->eraserButton->setStyleSheet("border:0; background-color:none");
     this->ui->bucketButton->setStyleSheet("border:0; background-color:none");
 
-    QPixmap map("/Users/Gradey/Repositories/u0930231/SpriteEditor/Resources_External/brush_black.png");
+    QDir::setSearchPaths("icons", QStringList(QDir::homePath() + "/Repositories/u0930231/SpriteEditor/Resources_External/"));
+    QPixmap map("icons:brush_black.png");
     map = map.scaled(35,35);
     setCursor(map);
 }
@@ -271,7 +272,8 @@ void MainWindow::on_eraserButton_clicked()
     this->ui->brushButton->setStyleSheet("border:0; background-color:none");
     this->ui->bucketButton->setStyleSheet("border:0; background-color:none");
 
-    QPixmap map("/Users/Gradey/Repositories/u0930231/SpriteEditor/Resources_External/eraser_black.png");
+    QDir::setSearchPaths("icons", QStringList(QDir::homePath() + "/Repositories/u0930231/SpriteEditor/Resources_External/"));
+    QPixmap map("icons:eraser_black.png");
     map = map.scaled(35,35);
     setCursor(map);
 }
@@ -283,7 +285,8 @@ void MainWindow::on_bucketButton_clicked()
     this->ui->eraserButton->setStyleSheet("border:0; background-color:none");
     this->ui->brushButton->setStyleSheet("border:0; background-color:none");
 
-    QPixmap map("/Users/Gradey/Repositories/u0930231/SpriteEditor/Resources_External/fill_black.png");
+    QDir::setSearchPaths("icons", QStringList(QDir::homePath() + "/Repositories/u0930231/SpriteEditor/Resources_External/"));
+    QPixmap map("icons:fill_black.png");
     map = map.scaled(35,35);
     setCursor(map);
 }
