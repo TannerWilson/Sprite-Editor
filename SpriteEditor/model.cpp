@@ -95,7 +95,6 @@ void Model::open()
                 int blue;
                 int alpha;
                 stream >> red >> green >> blue >> alpha;
-                qDebug() << red << green << blue << alpha;
                 QPoint point = selectedImage->indexToPoint(k);
                 if((red+blue+green+alpha) !=0){
                     penDraw(point.x(),point.y(),Vector4(red, green, blue, alpha));
@@ -104,6 +103,9 @@ void Model::open()
         }
     }
     file.close();
+
+    // alert the main window to create the correct number of frame buttons
+    emit fileOpened(this->selectedSprite->images.size());
 }
 
 void Model::exportSprite(Sprite sprite){;}
@@ -247,7 +249,7 @@ void Model::recursiveFill(int x, int y, QColor originalColor, QColor newColor)
     QColor currentColor = this->selectedImage->getPixels()[ss.str()];
 
     if (newColor != currentColor && originalColor == currentColor
-            && x < (this->screenwidth / this->unitsize) && y < (this->screenheight / this->unitsize))
+            && x < (this->screenWidth / this->unitSize) && y < (this->screenHeight / this->unitSize))
     {
         penDraw(x, y, Vector4(newColor.red(), newColor.green(), newColor.blue(), newColor.alpha()));
         recursiveFill(x, y, originalColor, newColor);

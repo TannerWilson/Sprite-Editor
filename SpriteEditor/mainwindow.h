@@ -55,7 +55,7 @@ private slots:
 
     void on_bucketButton_clicked();
 
-    //void on_addFrameButton_clicked();
+    void on_fileOpened(int frameCount);
 
 public:
     explicit MainWindow(QWidget *parent = 0);

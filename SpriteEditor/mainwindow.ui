@@ -249,7 +249,7 @@ frame</string>
      <enum>QFrame::Raised</enum>
     </property>
    </widget>
-   <widget class="QPushButton" name="StartPreview">
+   <widget class="QPushButton" name="startPreview">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -262,7 +262,7 @@ frame</string>
      <string>Start</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="StopPreview">
+   <widget class="QPushButton" name="stopPreview">
     <property name="geometry">
      <rect>
       <x>10</x>

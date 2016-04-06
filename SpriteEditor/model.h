@@ -23,7 +23,7 @@ class Model :public QObject
     Q_OBJECT
 private:
     // private data members
-    Sprite *selectedSprite;
+    //Sprite *selectedSprite;
     Image *selectedImage;
     Layer *selectedLayer;
     QGraphicsScene* scene;
@@ -48,6 +48,8 @@ private:
 
 
 public:
+    Sprite *selectedSprite;
+
     Model(QGraphicsScene* scene, int screenHeight, int screenWidth, int unitSize);
     Model();
     void penDraw(int x, int y, Vector4 color);
@@ -66,6 +68,9 @@ public:
     Vector4 color;
     Vector4 secondaryColor;
     QString currentTool;
+
+signals:
+    void fileOpened(int frameCount);
 
 public slots:
     void mousePressed(QPointF point);

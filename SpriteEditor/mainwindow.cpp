@@ -88,9 +88,11 @@ MainWindow::MainWindow(QWidget *parent) :
     connect (spriteGraphicsView, SIGNAL(mouseMoveSignal(QPointF)),model, SLOT(mouseMove(QPointF)));
     connect(spriteGraphicsView, SIGNAL(mousePressSignal(QPointF)), model, SLOT(mousePressed(QPointF)));
     connect(spriteGraphicsView, SIGNAL(mouseReleaseSignal(QPointF)), model, SLOT(mouseReleased(QPointF)));
+    connect(ui->startPreview, SIGNAL(pressed()),model,SLOT(startPreview()));
+    connect(ui->stopPreview, SIGNAL(pressed()),model,SLOT(stopPreview()));
 
-    connect(ui->StartPreview, SIGNAL(pressed()),model,SLOT(startPreview()));
-    connect(ui->StopPreview, SIGNAL(pressed()),model,SLOT(stopPreview()));
+    // Connect signal/slot for opening file
+    connect(model, SIGNAL(fileOpened(int)), this, SLOT(on_fileOpened(int)));
 
     // Add the spritegraphicsview to the layout
     graphicsLayout->addWidget(spriteGraphicsView);
@@ -99,7 +101,12 @@ MainWindow::MainWindow(QWidget *parent) :
     // Initialize GUI frames window with 1 frame
     on_addFrameButton_clicked();
     model->setCurrentImageIndex(0);
+    list<QPushButton*>::iterator it;
+    it = frameWidgets.begin();
+    QPushButton *button = *it;
+    button->animateClick();
 
+    qDebug() << this->model->selectedSprite->images.size();
 
     GIFExport gifExport;
 
@@ -115,7 +122,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-    delete ui;
+    delete ui;        
 }
 
 /*
@@ -143,7 +150,6 @@ void MainWindow::on_addFrameButton_clicked()
  */
 void MainWindow::on_frameButton_clicked()
 {
-        qDebug() << "OK";
         // Get rid of border on previously selected frame button
         // Add a border to the newly selected frame button
         list<QPushButton*>::iterator it;
@@ -168,10 +174,26 @@ void MainWindow::on_frameButton_clicked()
             advance(it,1);
         }
 
-        //qDebug() << QString::number(frameSelected);
-
         //Update model's current Image
         model->setCurrentImageIndex(frameSelected);
+}
+
+/*
+ * When a file is opened, we need to reset the number of
+ * frame buttons to match the number of frames in the
+ * opened sprite
+ */
+void MainWindow::on_fileOpened(int frameCount){
+    qDebug() << "Entered slot";
+
+    // Delete all existing frame buttons (except the first one)
+    for(int i = 0; i < frameWidgets.size(); i++)
+        on_deleteFrameButton_clicked();
+
+    // Before this loop, there's only 1 frame button.
+    // So add the rest.
+    for(int i = 1; i < frameCount; i++)
+        on_addFrameButton_clicked();
 }
 
 /*
@@ -179,6 +201,7 @@ void MainWindow::on_frameButton_clicked()
  */
 void MainWindow::on_deleteFrameButton_clicked()
 {
+    qDebug() << QString::number(frameWidgets.size());
     if(frameWidgets.size() > 1)
         {
             // Remove frame from GUI
@@ -228,7 +251,6 @@ void MainWindow::on_primaryColorButton_clicked()
         //ui->secondaryColorButton->setStyleSheet(ui->primaryColorButton->styleSheet());
 
         QString rgbaString = QString("%1, %2, %3, %4").arg(chosenColor.red()).arg(chosenColor.green()).arg(chosenColor.blue()).arg(chosenColor.alpha());
-        qDebug() << rgbaString;
         ui->primaryColorButton->setStyleSheet(QString("background-color: rgba(%1)").arg(rgbaString));
 
         this->model->color = Vector4(chosenColor.red(), chosenColor.green(), chosenColor.blue(), chosenColor.alpha());
