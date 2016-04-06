@@ -30,21 +30,21 @@ struct qt_meta_stringdata_Model_t {
 static const qt_meta_stringdata_Model_t qt_meta_stringdata_Model = {
     {
 QT_MOC_LITERAL(0, 0, 5), // "Model"
-QT_MOC_LITERAL(1, 6, 12), // "MousePressed"
+QT_MOC_LITERAL(1, 6, 12), // "mousePressed"
 QT_MOC_LITERAL(2, 19, 0), // ""
 QT_MOC_LITERAL(3, 20, 5), // "point"
-QT_MOC_LITERAL(4, 26, 9), // "MouseMove"
-QT_MOC_LITERAL(5, 36, 13), // "MouseReleased"
-QT_MOC_LITERAL(6, 50, 4), // "Save"
-QT_MOC_LITERAL(7, 55, 4), // "Open"
-QT_MOC_LITERAL(8, 60, 12), // "StartPreview"
-QT_MOC_LITERAL(9, 73, 11), // "StopPreview"
-QT_MOC_LITERAL(10, 85, 7) // "Preview"
+QT_MOC_LITERAL(4, 26, 9), // "mouseMove"
+QT_MOC_LITERAL(5, 36, 13), // "mouseReleased"
+QT_MOC_LITERAL(6, 50, 4), // "save"
+QT_MOC_LITERAL(7, 55, 4), // "open"
+QT_MOC_LITERAL(8, 60, 12), // "startPreview"
+QT_MOC_LITERAL(9, 73, 11), // "stopPreview"
+QT_MOC_LITERAL(10, 85, 7) // "preview"
 
     },
-    "Model\0MousePressed\0\0point\0MouseMove\0"
-    "MouseReleased\0Save\0Open\0StartPreview\0"
-    "StopPreview\0Preview"
+    "Model\0mousePressed\0\0point\0mouseMove\0"
+    "mouseReleased\0save\0open\0startPreview\0"
+    "stopPreview\0preview"
 };
 #undef QT_MOC_LITERAL
 
@@ -90,14 +90,14 @@ void Model::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void 
         Model *_t = static_cast<Model *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->MousePressed((*reinterpret_cast< QPointF(*)>(_a[1]))); break;
-        case 1: _t->MouseMove((*reinterpret_cast< QPointF(*)>(_a[1]))); break;
-        case 2: _t->MouseReleased((*reinterpret_cast< QPointF(*)>(_a[1]))); break;
-        case 3: _t->Save(); break;
-        case 4: _t->Open(); break;
-        case 5: _t->StartPreview(); break;
-        case 6: _t->StopPreview(); break;
-        case 7: _t->Preview(); break;
+        case 0: _t->mousePressed((*reinterpret_cast< QPointF(*)>(_a[1]))); break;
+        case 1: _t->mouseMove((*reinterpret_cast< QPointF(*)>(_a[1]))); break;
+        case 2: _t->mouseReleased((*reinterpret_cast< QPointF(*)>(_a[1]))); break;
+        case 3: _t->save(); break;
+        case 4: _t->open(); break;
+        case 5: _t->startPreview(); break;
+        case 6: _t->stopPreview(); break;
+        case 7: _t->preview(); break;
         default: ;
         }
     }

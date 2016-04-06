@@ -5,14 +5,14 @@ Sprite::Sprite()
     currentImageIndex = 0;
 }
 
-Image* Sprite::AddImage()
+Image* Sprite::addImage()
 {
     Image* newimage = new Image();
     images.push_back(newimage);
     return newimage;
 }
 
-void Sprite::DeleteImage(int index)
+void Sprite::deleteImage(int index)
 {
     images.erase(images.begin() + index);
     if(currentImageIndex > 0)
@@ -21,17 +21,17 @@ void Sprite::DeleteImage(int index)
     }
 }
 
-Image* Sprite::GetImage(int index)
+Image* Sprite::getImage(int index)
 {
     return images.at(index);
 }
 
-int Sprite::GetCurrentImageIndex()
+int Sprite::getCurrentImageIndex()
 {
     return currentImageIndex;
 }
 
-Image* Sprite::SetCurrentImageIndex(int index)
+Image* Sprite::setCurrentImageIndex(int index)
 {
     currentImageIndex = index;
     return images[index];

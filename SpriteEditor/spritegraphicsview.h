@@ -12,9 +12,9 @@ class SpriteGraphicsView : public QGraphicsView
 public:
     explicit SpriteGraphicsView(QWidget *parent = 0);
 signals:
-    void MouseMoveSignal(QPointF point);
-    void MousePressSignal(QPointF point);
-    void MouseReleaseSignal(QPointF point);
+    void mouseMoveSignal(QPointF point);
+    void mousePressSignal(QPointF point);
+    void mouseReleaseSignal(QPointF point);
 
 public slots:
     void mousePressEvent(QMouseEvent * event);

@@ -39,21 +39,23 @@ private:
     int screenHeight;
 
 private slots:
-    void onSecondaryColorButtonClicked();
+    void on_secondaryColorButton_clicked();
 
-    void onAddFrameButtonClicked();
+    void on_addFrameButton_clicked();
 
-    void onFrameButtonClicked();
+    void on_frameButton_clicked();
 
-    void onPrimaryColorButtonClicked();
+    void on_primaryColorButton_clicked();
 
-    void onDeleteFrameButtonClicked();
+    void on_deleteFrameButton_clicked();
 
-    void onBrushButtonClicked();
+    void on_brushButton_clicked();
 
-    void onEraserButtonClicked();
+    void on_eraserButton_clicked();
 
-    void onBucketButtonClicked();
+    void on_bucketButton_clicked();
+
+    //void on_addFrameButton_clicked();
 
 public:
     explicit MainWindow(QWidget *parent = 0);

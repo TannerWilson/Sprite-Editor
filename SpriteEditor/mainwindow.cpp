@@ -31,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // Set up box layout for graphics frame
     graphicsLayout = new QVBoxLayout;
-    ui->graphicsframe->setLayout(graphicslayout);
+    ui->graphicsframe->setLayout(graphicsLayout);
 
     // Set the primary and secondary color choices
     ui->primaryColorButton->setStyleSheet("background-color: black");
@@ -85,30 +85,30 @@ MainWindow::MainWindow(QWidget *parent) :
     spriteGraphicsView->setMouseTracking(true);
 
     // Connect mouse signals and slots
-    connect (spriteGraphicsView, SIGNAL(MouseMoveSignal(QPointF)),model, SLOT(MouseMove(QPointF)));
-    connect(spriteGraphicsView, SIGNAL(MousePressSignal(QPointF)), model, SLOT(MousePressed(QPointF)));
-    connect(spriteGraphicsView, SIGNAL(MouseReleaseSignal(QPointF)), model, SLOT(MouseReleased(QPointF)));
+    connect (spriteGraphicsView, SIGNAL(mouseMoveSignal(QPointF)),model, SLOT(mouseMove(QPointF)));
+    connect(spriteGraphicsView, SIGNAL(mousePressSignal(QPointF)), model, SLOT(mousePressed(QPointF)));
+    connect(spriteGraphicsView, SIGNAL(mouseReleaseSignal(QPointF)), model, SLOT(mouseReleased(QPointF)));
 
-    connect(ui->StartPreview, SIGNAL(pressed()),model,SLOT(StartPreview()));
-    connect(ui->StopPreview, SIGNAL(pressed()),model,SLOT(StopPreview()));
+    connect(ui->StartPreview, SIGNAL(pressed()),model,SLOT(startPreview()));
+    connect(ui->StopPreview, SIGNAL(pressed()),model,SLOT(stopPreview()));
 
     // Add the spritegraphicsview to the layout
     graphicsLayout->addWidget(spriteGraphicsView);
     graphicsLayout->addStretch(1);
 
     // Initialize GUI frames window with 1 frame
-    onAddFrameButtonClicked();
-    model->SetCurrentImageIndex(0);
+    on_addFrameButton_clicked();
+    model->setCurrentImageIndex(0);
 
 
     GIFExport gifExport;
 
     // Connect menu bar actions
-    connect(ui->actionSave, SIGNAL(triggered()), model, SLOT(Save()));
-    connect(ui->actionOpen, SIGNAL(triggered()), model, SLOT(Open()));
+    connect(ui->actionSave, SIGNAL(triggered()), model, SLOT(save()));
+    connect(ui->actionOpen, SIGNAL(triggered()), model, SLOT(open()));
 
     // pen is default tool
-    onBrushButtonClicked();
+    on_brushButton_clicked();
     this->ui->eraserButton->setStyleSheet("border:0; background-color:none");
     this->ui->bucketButton->setStyleSheet("border:0; background-color:none");
 }
@@ -121,7 +121,7 @@ MainWindow::~MainWindow()
 /*
  * Creates a new, blank image frame for the Sprite, shown on the left of the GUI.
  */
-void MainWindow::onAddFrameButtonClicked()
+void MainWindow::on_addFrameButton_clicked()
 {
     QPushButton *frameButton = new QPushButton(this);
     frameButton->setGeometry(0,0,individualFrameWidth,individualFrameHeight);
@@ -132,18 +132,19 @@ void MainWindow::onAddFrameButtonClicked()
     frameButton->setStyleSheet("background-color: white");
     framesLayout->addWidget(frameButton);
     frameWidgets.push_back(frameButton);
-    connect(frameButton, SIGNAL(clicked()), this, SLOT(onFrameButtonClicked()));
+    connect(frameButton, SIGNAL(clicked()), this, SLOT(on_frameButton_clicked()));
 
-    model->AddImage();
+    model->addImage();
 }
 
 
 /*
  * Shows the selected frame on the canvas for modification
  */
-void MainWindow::onFrameButtonClicked()
+void MainWindow::on_frameButton_clicked()
 {
-    // Get rid of border on previously selected frame button
+        qDebug() << "OK";
+        // Get rid of border on previously selected frame button
         // Add a border to the newly selected frame button
         list<QPushButton*>::iterator it;
         it = frameWidgets.begin();
@@ -170,27 +171,27 @@ void MainWindow::onFrameButtonClicked()
         //qDebug() << QString::number(frameSelected);
 
         //Update model's current Image
-        model->SetCurrentImageIndex(frameSelected);
+        model->setCurrentImageIndex(frameSelected);
 }
 
 /*
  * Removes the selected frame from the Sprite.
  */
-void MainWindow::onDeleteFrameButtonClicked()
+void MainWindow::on_deleteFrameButton_clicked()
 {
     if(frameWidgets.size() > 1)
         {
             // Remove frame from GUI
             list<QPushButton*>::iterator it;
             it = frameWidgets.begin();
-            advance (it, model->GetCurrentImageIndex());
+            advance (it, model->getCurrentImageIndex());
             frameWidgets.erase(it);
             QWidget *frame = *it;
             layout()->removeWidget(frame);
             delete frame;
 
             // Remove frame from model
-            model->RemoveImageAt(model->GetCurrentImageIndex());
+            model->removeImageAt(model->getCurrentImageIndex());
 
 
             // Update frame button labels and put focus on the frame that came
@@ -200,7 +201,7 @@ void MainWindow::onDeleteFrameButtonClicked()
             {
                 QPushButton *button = *it;
                 button->setText(QString::number(i+1));
-                if(i == model->GetCurrentImageIndex())
+                if(i == model->getCurrentImageIndex())
                     button->animateClick();
 
                 advance(it,1);
@@ -213,7 +214,7 @@ void MainWindow::onDeleteFrameButtonClicked()
  * Opens the color picker, saves the selected color, and updates the primary and secondary
  * color choices
  */
-void MainWindow::onPrimaryColorButtonClicked()
+void MainWindow::on_primaryColorButton_clicked()
 {
     // First three params are meaningless... just default. Last param enables transparency option
     QColor chosenColor = QColorDialog::getColor(Qt::white, 0, QString(), QColorDialog::ShowAlphaChannel);
@@ -239,7 +240,7 @@ void MainWindow::onPrimaryColorButtonClicked()
  * Sets the current drawing color to the color displayed on the partially hidden color button.
  * Swaps the colors shown on the primary/secondary button pair.
  */
-void MainWindow::onSecondaryColorButtonClicked()
+void MainWindow::on_secondaryColorButton_clicked()
 {
     // Swap the colors shown on the two buttons
     QString styleInfo = (ui->primaryColorButton->styleSheet());
@@ -254,7 +255,7 @@ void MainWindow::onSecondaryColorButtonClicked()
 }
 
 
-void MainWindow::onBrushButtonClicked()
+void MainWindow::on_brushButton_clicked()
 {
     this->model->currentTool = "Pen";
     //this->setCursor(Qt::WaitCursor);
@@ -268,7 +269,7 @@ void MainWindow::onBrushButtonClicked()
     setCursor(map);
 }
 
-void MainWindow::onEraserButtonClicked()
+void MainWindow::on_eraserButton_clicked()
 {
     this->model->currentTool = "Eraser";
     this->ui->eraserButton->setStyleSheet("border:2px solid black; background-color:#999999");
@@ -281,7 +282,7 @@ void MainWindow::onEraserButtonClicked()
     setCursor(map);
 }
 
-void MainWindow::onBucketButtonClicked()
+void MainWindow::on_bucketButton_clicked()
 {
     this->model->currentTool = "Bucket";
     this->ui->bucketButton->setStyleSheet("border:2px solid black; background-color:#999999");

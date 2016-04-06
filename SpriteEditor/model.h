@@ -40,9 +40,9 @@ private:
     // private methods
     void recursiveFill(int x, int y, QColor currentColor, QColor newColor);
     bool colorEquals(Vector4 vectorColor, QColor color);
-    void Export(Sprite);
-    void UpdateGUI();
-    void DrawGrid(int height, int width, int unitSize);
+    void exportSprite(Sprite sprite);
+    void updateGUI();
+    void drawGrid(int height, int width, int unitSize);
 
 
 
@@ -72,7 +72,7 @@ public slots:
     void mouseMove(QPointF point);
     void mouseReleased(QPointF point);
     void save();
-    void spen();
+    void open();
     void startPreview();
     void stopPreview();
     void preview();

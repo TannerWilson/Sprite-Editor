@@ -3,7 +3,7 @@
 #include <string>
 #include "sprite.h"
 #include <QDebug>
-
+#include <ImageMagick/Magick++.h>
 
 class GIFExport
 {
