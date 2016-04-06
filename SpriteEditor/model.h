@@ -15,6 +15,7 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QGraphicsRectItem>
+#include <Magick++.h>
 
 using namespace std;
 
@@ -41,7 +42,6 @@ private:
     // private methods
     void recursiveFill(int x, int y, QColor currentColor, QColor newColor);
     bool colorEquals(Vector4 vectorColor, QColor color);
-    void exportSprite(Sprite sprite);
     void updateGUI();
     void drawGrid(int height, int width, int unitSize);
 
@@ -70,6 +70,7 @@ public:
     Vector4 secondaryColor;
     QString currentTool;
     void setFPS(int fps);
+    void exportSprite();
 
 signals:
     void fileOpened(int frameCount);

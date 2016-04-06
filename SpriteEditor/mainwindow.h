@@ -59,6 +59,8 @@ private slots:
 
     void on_spinBox_valueChanged(int arg1);
 
+    void on_actionExport_triggered();
+
 public:
     explicit MainWindow(QWidget *parent = 0);
     void addRect(float x, float y, float height, float width, Vector4 color);

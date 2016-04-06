@@ -324,3 +324,8 @@ void MainWindow::on_spinBox_valueChanged(int fps)
 {
     this->model->setFPS(fps);
 }
+
+void MainWindow::on_actionExport_triggered()
+{
+    model->exportSprite();
+}

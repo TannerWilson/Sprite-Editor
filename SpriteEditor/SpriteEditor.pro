@@ -43,7 +43,12 @@ FORMS    += mainwindow.ui
 RESOURCES += \
     resources.qrc
 
-unix:!macx: LIBS += -L$$PWD/../../../../../../../../usr/lib64/ -lMagick++
+unix:!macx: LIBS += -L$$PWD/../../../../../../../../usr/lib64/ -lMagick++ -lMagickCore
 
 INCLUDEPATH += $$PWD/../../../../../../../../usr/include/ImageMagick
 DEPENDPATH += $$PWD/../../../../../../../../usr/include/ImageMagick
+
+unix:!macx: LIBS += -L$$PWD/../../../../../../lib64/ -lMagick++ -lMagickCore
+
+INCLUDEPATH += $$PWD/../../../../../../usr/include
+DEPENDPATH += $$PWD/../../../../../../usr/include

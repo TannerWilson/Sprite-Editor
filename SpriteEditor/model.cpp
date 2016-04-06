@@ -108,7 +108,42 @@ void Model::open()
     emit fileOpened(this->selectedSprite->images.size());
 }
 
-void Model::exportSprite(Sprite sprite){;}
+void Model::exportSprite()
+{
+
+    //    vector<QImage> images;
+        list<Magick::Image> images;
+        int cellCount = (screenHeight/unitSize) * (screenWidth/unitSize);
+        qDebug() << "checkpoint 1";
+        for (int i = 0; i < selectedSprite->images.size(); i++){
+            QGraphicsScene* currentScene = new QGraphicsScene(this);
+            currentScene->setSceneRect(0,0,screenHeight,screenWidth);
+            Image* currentImage = selectedSprite->getImage(i);
+                qDebug() << "checkpoint 2";
+            for (int k = 0; k < cellCount; k ++){
+                QColor currentColor = currentImage->getPixelColorIndex(k);
+                QPoint currentPoint = currentImage->indexToPoint(k);
+                QBrush brush(currentColor);
+                QPen outlinePen(QColor(0,0,0,0));
+                outlinePen.setWidth(1);
+                currentScene->addRect(currentPoint.x()*unitSize, currentPoint.y()*unitSize, unitSize, unitSize, outlinePen, brush);
+                qDebug() << "checkpoint 3";
+            }
+            QImage image(currentScene->sceneRect().size().toSize(), QImage::Format_ARGB32);
+            image.fill(Qt::transparent);
+            QPainter painter(&image);
+            currentScene->render(&painter);
+            QString name = "temp";
+            QString number = QString::number(i);
+            name.append(number).append(".png");
+            image.save(name);
+            QString path = "./";
+            path.append(name);
+            Magick::Image aMagickImage(path.toStdString());
+            images.push_back(aMagickImage);
+        }
+        writeImages(images.begin(), images.end(), "animation.gif" );
+}
 void Model::updateGUI(){;}
 
 /*
