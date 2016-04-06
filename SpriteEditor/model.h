@@ -27,13 +27,13 @@ private:
     Image *selectedImage;
     Layer *selectedLayer;
     QGraphicsScene* scene;
-    int screenwidth;
-    int screenheight;
+    int screenWidth;
+    int screenHeight;
 
-    int currentpreviewframe;
-    QTimer *previewtimer;
+    int currentPreviewFrame;
+    QTimer *previewTimer;
 
-    QMap<string,QGraphicsRectItem*> pixelmap;
+    QMap<string,QGraphicsRectItem*> pixelMap;
 
     bool mouseIsPressed;
 
@@ -42,40 +42,40 @@ private:
     bool colorEquals(Vector4 vectorColor, QColor color);
     void Export(Sprite);
     void UpdateGUI();
-    void DrawGrid(int height, int width, int unitsize);
+    void DrawGrid(int height, int width, int unitSize);
 
 
 
 
 public:
-    Model(QGraphicsScene* scene, int screenheight, int screenwidth, int unitsize);
+    Model(QGraphicsScene* scene, int screenHeight, int screenWidth, int unitSize);
     Model();
     void penDraw(int x, int y, Vector4 color);
     void erase(int x, int y);
     void fill(int x, int y, Vector4 color);
 
-    void RedrawImage(int index);
-    void DeleteRect(int x, int y);
-    void AddLayer();
-    void AddImage();
-    void RemoveImageAt(int index);
-    int GetCurrentImageIndex();
-    void SetCurrentImageIndex(int index);
-    QPoint GetCellLocation(QPointF point);
-    int unitsize;
+    void redrawImage(int index);
+    void deleteRect(int x, int y);
+    void addLayer();
+    void addImage();
+    void removeImageAt(int index);
+    int getCurrentImageIndex();
+    void setCurrentImageIndex(int index);
+    QPoint getCellLocation(QPointF point);
+    int unitSize;
     Vector4 color;
     Vector4 secondaryColor;
     QString currentTool;
 
 public slots:
-    void MousePressed(QPointF point);
-    void MouseMove(QPointF point);
-    void MouseReleased(QPointF point);
-    void Save();
-    void Open();
-    void StartPreview();
-    void StopPreview();
-    void Preview();
+    void mousePressed(QPointF point);
+    void mouseMove(QPointF point);
+    void mouseReleased(QPointF point);
+    void save();
+    void spen();
+    void startPreview();
+    void stopPreview();
+    void preview();
 
 };
 
