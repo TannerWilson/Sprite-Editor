@@ -128,11 +128,15 @@ void Model::drawGrid(int imageHeight, int imageWidth, int unitSize)
         for(int j = 0; j <= numberofHorizontalLines; j++)
         {
             if(i%2 == 0)
+            {
                 if(j%2 == 0)
                     scene->addRect(i*unitSize, j*unitSize, unitSize, unitSize, rectPen, greyBrush);
+            }
             else
+            {
                 if(j%2 == 1)
                     scene->addRect(i*unitSize, j*unitSize, unitSize, unitSize, rectPen, greyBrush);
+            }
         }
     }
 }
