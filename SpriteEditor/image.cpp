@@ -9,7 +9,7 @@ Image::Image()
 QColor Image::getPixelColor(QPoint point)
 {
     stringstream key;
-    key << point.x() << point.y();
+    key << point.x() << " " << point.y();
     if(pixels.contains(key.str()))
         return pixels[key.str()];
     else
@@ -19,14 +19,14 @@ QColor Image::getPixelColor(QPoint point)
 void Image::addPixel(QPoint point, QColor color)
 {
     stringstream key;
-    key << point.x() << point.y();
+    key << point.x() << " " << point.y();
     pixels[key.str()] = color;
 }
 
 void Image::clearPixel(QPoint point)
 {
     stringstream key;
-    key << point.x() << point.y();
+    key << point.x() << " " << point.y();
     pixels[key.str()] = QColor(0,0,0,0);
 }
 
