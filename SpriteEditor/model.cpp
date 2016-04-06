@@ -424,7 +424,7 @@ void Model::startPreview()
     currentPreviewFrame = 0;
     previewTimer = new QTimer;
     connect(previewTimer, SIGNAL(timeout()), this, SLOT(preview()));
-    previewTimer->start(1000);
+    previewTimer->start(1000/fps);
 }
 
 /*
@@ -436,4 +436,9 @@ void Model::stopPreview()
     currentPreviewFrame = 0;
     redrawImage(0);
 
+}
+
+void Model::setFPS(int fps)
+{
+    this->fps = fps;
 }

@@ -57,6 +57,8 @@ private slots:
 
     void on_fileOpened(int frameCount);
 
+    void on_spinBox_valueChanged(int arg1);
+
 public:
     explicit MainWindow(QWidget *parent = 0);
     void addRect(float x, float y, float height, float width, Vector4 color);

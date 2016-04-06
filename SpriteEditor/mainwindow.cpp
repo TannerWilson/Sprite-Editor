@@ -316,3 +316,11 @@ void MainWindow::on_bucketButton_clicked()
     map = map.scaled(35,35);
     setCursor(map);
 }
+
+/*
+ * Changes the FPS of the animation.
+ */
+void MainWindow::on_spinBox_valueChanged(int fps)
+{
+    this->model->setFPS(fps);
+}

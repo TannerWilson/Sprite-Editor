@@ -36,6 +36,7 @@ private:
     QMap<string,QGraphicsRectItem*> pixelMap;
 
     bool mouseIsPressed;
+    int fps;
 
     // private methods
     void recursiveFill(int x, int y, QColor currentColor, QColor newColor);
@@ -68,6 +69,7 @@ public:
     Vector4 color;
     Vector4 secondaryColor;
     QString currentTool;
+    void setFPS(int fps);
 
 signals:
     void fileOpened(int frameCount);
