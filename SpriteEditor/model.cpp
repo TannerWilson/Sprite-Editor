@@ -15,6 +15,9 @@ Model::Model(QGraphicsScene* scene,int screenheight,int screenwidth,int unitsize
 
 // private methods
 
+/*
+* Saves the sprite in the required format
+*/
 void Model::save()
 {
     int cellCount = (screenHeight/unitSize) * (screenWidth/unitSize);
@@ -54,6 +57,9 @@ void Model::save()
     file.close();
 }
 
+/*
+* Opens and loads a desired sprite session
+*/
 void Model::open()
 {
     int frameCount = 0;
@@ -103,6 +109,9 @@ void Model::open()
 void Model::exportSprite(Sprite sprite){;}
 void Model::updateGUI(){;}
 
+/*
+* Draws the grid representing the pixels for the user to draw within.
+*/
 void Model::drawGrid(int imageHeight, int imageWidth, int unitSize)
 {
     int numberofVerticalLines = imageWidth/unitSize;
@@ -119,19 +128,11 @@ void Model::drawGrid(int imageHeight, int imageWidth, int unitSize)
         for(int j = 0; j <= numberofHorizontalLines; j++)
         {
             if(i%2 == 0)
-            {
                 if(j%2 == 0)
-                {
                     scene->addRect(i*unitSize, j*unitSize, unitSize, unitSize, rectPen, greyBrush);
-                }
-            }
             else
-            {
                 if(j%2 == 1)
-                {
                     scene->addRect(i*unitSize, j*unitSize, unitSize, unitSize, rectPen, greyBrush);
-                }
-            }
         }
     }
 }
@@ -140,11 +141,17 @@ void Model::drawGrid(int imageHeight, int imageWidth, int unitSize)
 
 void Model::addLayer(){;}
 
+/*
+* Adds and image (frame) to the sprite
+*/
 void Model::addImage()
 {
     selectedSprite->addImage();
 }
 
+/*
+* Removes and image (frame) from a sprite
+*/
 void Model::removeImageAt(int index)
 {
     selectedSprite->deleteImage(index);
@@ -170,7 +177,9 @@ void Model::setCurrentImageIndex(int index)
 }
 
 
-
+/*
+* Draws on the screen at x,y with the color "color"
+*/
 void Model::penDraw(int x, int y, Vector4 color)
 {
 
@@ -209,6 +218,9 @@ void Model::penDraw(int x, int y, Vector4 color)
 
 }
 
+/*
+* Fills the entire enclosed area clicked with the given color
+*/
 void Model::fill(int x, int y, Vector4 color)
 {
     if (x > 0 && y > 0)
@@ -221,6 +233,9 @@ void Model::fill(int x, int y, Vector4 color)
     }
 }
 
+/*
+* Helper recursive method used in tandam with the above fill
+*/
 void Model::recursiveFill(int x, int y, QColor originalColor, QColor newColor)
 {
     stringstream ss;
@@ -239,11 +254,17 @@ void Model::recursiveFill(int x, int y, QColor originalColor, QColor newColor)
     }
 }
 
+/*
+* Removes the color from the selected cell 
+*/
 void Model::erase(int x, int y)
 {
     this->deleteRect(x, y);
 }
 
+/*
+* Removes the selected rectangle
+*/
 void Model::deleteRect(int x, int y)
 {
     stringstream posstring;
@@ -254,6 +275,10 @@ void Model::deleteRect(int x, int y)
     this->selectedImage->clearPixel(QPoint(x,y));
 }
 
+/*
+* Returns the point of the top left of the square clicked. 
+* Used to support the draw method
+*/
 QPoint Model::getCellLocation(QPointF point)
 {
     QPoint returnpoint;
@@ -299,6 +324,9 @@ QPoint Model::getCellLocation(QPointF point)
 
 }
 
+/*
+* Event called when the mouse is pressed
+*/
 void Model::mousePressed(QPointF point)
 {
     if(point.x() < 0 || point.x() > screenWidth || point.y() < 0 || point.y() > screenHeight)
@@ -338,7 +366,9 @@ void Model::mouseReleased(QPointF point)
     this->mouseIsPressed = false;
 }
 
-
+/*
+* Redraws the graphics view. Used for the perview
+*/
 void Model::redrawImage(int index)
 {
 
@@ -362,6 +392,10 @@ void Model::redrawImage(int index)
 
 }
 
+/*
+* Animates/iterates all frames created up to this point, in order and displays 
+* each on the graphics view.
+*/
 void Model::preview()
 {
 
@@ -375,6 +409,9 @@ void Model::preview()
 
 }
 
+/*
+* Called when the preview button is pressed. Starts the preview.
+*/
 void Model::startPreview()
 {
     qDebug() << selectedSprite->images.size();
@@ -384,6 +421,9 @@ void Model::startPreview()
     previewTimer->start(1000);
 }
 
+/*
+* Called when the stop button is pressed, stops the preview. 
+*/
 void Model::stopPreview()
 {
     previewTimer->stop();
