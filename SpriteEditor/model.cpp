@@ -160,9 +160,9 @@ void Model::drawGrid(int imageHeight, int imageWidth, int unitSize)
     QBrush greyBrush(QColor(150, 150, 150, 150));
 
     // Draw grid and checkered background
-    for(int i = 0; i <= numberofVerticalLines; i++)
+    for(int i = 0; i <= numberofVerticalLines-1; i++)
     {
-        for(int j = 0; j <= numberofHorizontalLines; j++)
+        for(int j = 0; j <= numberofHorizontalLines-1; j++)
         {
             if(i%2 == 0)
             {
@@ -280,7 +280,7 @@ void Model::fill(int x, int y, Vector4 color)
 void Model::recursiveFill(int x, int y, QColor originalColor, QColor newColor)
 {
     stringstream ss;
-    ss << x << y;
+    ss << x << " " << y;
     QColor currentColor = this->selectedImage->getPixels()[ss.str()];
 
     if (newColor != currentColor && originalColor == currentColor
