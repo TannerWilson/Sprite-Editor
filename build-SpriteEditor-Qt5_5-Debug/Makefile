@@ -15,7 +15,7 @@ CXX           = g++
 DEFINES       = -DQT_QML_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I../SpriteEditor -I. -I/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include -I/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets -I/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtGui -I/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtCore -I. -I. -I/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/mkspecs/linux-g++
+INCPATH       = -I../SpriteEditor -I. -I/usr/include/ImageMagick -I/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include -I/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets -I/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtGui -I/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtCore -I. -I. -I/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/mkspecs/linux-g++
 QMAKE         = /usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -33,10 +33,10 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = SpriteEditor1.0.0
-DISTDIR = /home/sabaghia/new/clone\ 1/u0930231/build-SpriteEditor-Qt5_5-Debug/.tmp/SpriteEditor1.0.0
+DISTDIR = /home/jmurphy/Documents/cs3505/Sprite\ Editor/repo/u0930231/build-SpriteEditor-Qt5_5-Debug/.tmp/SpriteEditor1.0.0
 LINK          = g++
 LFLAGS        = -Wl,-rpath,/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64 -Wl,-rpath,/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/lib
-LIBS          = $(SUBLIBS) -L/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/lib -lQt5Widgets -L/usr/lib64 -lQt5Gui -lQt5Core -lGL -lpthread 
+LIBS          = $(SUBLIBS) -L/home/jmurphy/Documents/cs3505/Sprite\ Editor/repo/u0930231/SpriteEditor/../../../../../../../../usr/lib64/ -lMagick++ -L/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/lib -lQt5Widgets -L/usr/lib64 -lQt5Gui -lQt5Core -lGL -lpthread 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -952,7 +952,7 @@ moc_mainwindow.cpp: ../SpriteEditor/model.h \
 		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtCore/QPointF \
 		../SpriteEditor/gifexport.h \
 		../SpriteEditor/mainwindow.h
-	/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I'/home/sabaghia/new/clone 1/u0930231/SpriteEditor' -I/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include -I/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets -I/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtGui -I/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtCore -I. ../SpriteEditor/mainwindow.h -o moc_mainwindow.cpp
+	/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I'/home/jmurphy/Documents/cs3505/Sprite Editor/repo/u0930231/SpriteEditor' -I/usr/include/ImageMagick -I/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include -I/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets -I/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtGui -I/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtCore -I. ../SpriteEditor/mainwindow.h -o moc_mainwindow.cpp
 
 moc_model.cpp: ../SpriteEditor/sprite.h \
 		../SpriteEditor/image.h \
@@ -1277,7 +1277,7 @@ moc_model.cpp: ../SpriteEditor/sprite.h \
 		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/QGraphicsRectItem \
 		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/qgraphicsitem.h \
 		../SpriteEditor/model.h
-	/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I'/home/sabaghia/new/clone 1/u0930231/SpriteEditor' -I/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include -I/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets -I/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtGui -I/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtCore -I. ../SpriteEditor/model.h -o moc_model.cpp
+	/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I'/home/jmurphy/Documents/cs3505/Sprite Editor/repo/u0930231/SpriteEditor' -I/usr/include/ImageMagick -I/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include -I/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets -I/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtGui -I/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtCore -I. ../SpriteEditor/model.h -o moc_model.cpp
 
 moc_spritegraphicsview.cpp: /usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/QWidget \
 		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/qwidget.h \
@@ -1393,7 +1393,7 @@ moc_spritegraphicsview.cpp: /usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64
 		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/QGraphicsScene \
 		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtGui/QMouseEvent \
 		../SpriteEditor/spritegraphicsview.h
-	/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I'/home/sabaghia/new/clone 1/u0930231/SpriteEditor' -I/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include -I/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets -I/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtGui -I/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtCore -I. ../SpriteEditor/spritegraphicsview.h -o moc_spritegraphicsview.cpp
+	/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/bin/moc $(DEFINES) -I/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/mkspecs/linux-g++ -I'/home/jmurphy/Documents/cs3505/Sprite Editor/repo/u0930231/SpriteEditor' -I/usr/include/ImageMagick -I/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include -I/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets -I/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtGui -I/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtCore -I. ../SpriteEditor/spritegraphicsview.h -o moc_spritegraphicsview.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -2109,8 +2109,43 @@ mainwindow.o: ../SpriteEditor/mainwindow.cpp ../SpriteEditor/mainwindow.h \
 		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtCore/QPointF \
 		../SpriteEditor/gifexport.h \
 		ui_mainwindow.h \
+		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtCore/QVariant \
+		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/QAction \
+		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/qaction.h \
+		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/qactiongroup.h \
+		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/QApplication \
+		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/qapplication.h \
+		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/qdesktopwidget.h \
+		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/QButtonGroup \
+		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/qbuttongroup.h \
+		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/QFrame \
+		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/QHeaderView \
+		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/qheaderview.h \
+		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/qabstractitemview.h \
+		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/qabstractitemdelegate.h \
+		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/qstyleoption.h \
+		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/qabstractspinbox.h \
+		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/qslider.h \
+		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/qabstractslider.h \
+		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/qstyle.h \
+		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/qtabbar.h \
+		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/qrubberband.h \
+		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/QLabel \
+		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/qlabel.h \
+		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/QMenu \
+		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/qmenu.h \
+		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/QMenuBar \
+		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/qmenubar.h \
+		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/QScrollArea \
+		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/QSpinBox \
+		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/qspinbox.h \
+		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/QStatusBar \
+		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/qstatusbar.h \
 		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/QColorDialog \
-		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/qcolordialog.h
+		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/qcolordialog.h \
+		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/QInputDialog \
+		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/qinputdialog.h \
+		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtWidgets/qlineedit.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../SpriteEditor/mainwindow.cpp
 
 model.o: ../SpriteEditor/model.cpp ../SpriteEditor/model.h \
@@ -2580,7 +2615,8 @@ image.o: ../SpriteEditor/image.cpp ../SpriteEditor/image.h \
 		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtCore/qcontiguouscache.h \
 		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtGui/QColor \
 		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtGui/qcolor.h \
-		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtGui/qrgb.h
+		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtGui/qrgb.h \
+		/usr/local/stow/qt/amd64_linux26/qt-5.5.1/5.5/gcc_64/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o image.o ../SpriteEditor/image.cpp
 
 layer.o: ../SpriteEditor/layer.cpp ../SpriteEditor/layer.h

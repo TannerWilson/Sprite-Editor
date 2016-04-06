@@ -11,11 +11,11 @@ class Sprite
 public:
     Sprite();
     vector<Image*> images; // 0-indexed
-    Image* AddImage();
-    void DeleteImage(int index);
-    Image* GetImage(int index);
-    int GetCurrentImageIndex();
-    Image* SetCurrentImageIndex(int index);
+    Image* addImage();
+    void deleteImage(int index);
+    Image* getImage(int index);
+    int getCurrentImageIndex();
+    Image* setCurrentImageIndex(int index);
 };
 
 #endif // SPRITE_H

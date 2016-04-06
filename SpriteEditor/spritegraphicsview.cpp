@@ -9,17 +9,17 @@ SpriteGraphicsView::SpriteGraphicsView(QWidget *parent) :
 void SpriteGraphicsView::mousePressEvent(QMouseEvent * event)
 {
     QPointF point = mapToScene(event->pos());
-    emit MousePressSignal(point);
+    emit mousePressSignal(point);
 }
 
 void SpriteGraphicsView::mouseMoveEvent (QMouseEvent *event)
 {
     QPointF point = mapToScene (event->pos());
-    emit MouseMoveSignal(point);
+    emit mouseMoveSignal(point);
 }
 
 void SpriteGraphicsView::mouseReleaseEvent(QMouseEvent *event)
 {
     QPointF point = mapToScene (event->pos());
-    emit MouseReleaseSignal(point);
+    emit mouseReleaseSignal(point);
 }

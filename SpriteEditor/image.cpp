@@ -1,11 +1,12 @@
 #include "image.h"
+#include <QDebug>
 
 Image::Image()
 {
 
 }
 
-QColor Image::GetPixelColor(QPoint point)
+QColor Image::getPixelColor(QPoint point)
 {
     stringstream key;
     key << point.x() << point.y();
@@ -15,21 +16,21 @@ QColor Image::GetPixelColor(QPoint point)
         return QColor(0,0,0,0);
 }
 
-void Image::AddPixel(QPoint point, QColor color)
+void Image::addPixel(QPoint point, QColor color)
 {
     stringstream key;
     key << point.x() << point.y();
     pixels[key.str()] = color;
 }
 
-void Image::ClearPixel(QPoint point)
+void Image::clearPixel(QPoint point)
 {
     stringstream key;
     key << point.x() << point.y();
     pixels[key.str()] = QColor(0,0,0,0);
 }
 
-QColor Image::GetPixelColorIndex(int index)
+QColor Image::getPixelColorIndex(int index)
 {
     if(pixelsIndex.contains(index))
         return pixelsIndex[index];
@@ -37,32 +38,32 @@ QColor Image::GetPixelColorIndex(int index)
         return QColor(0,0,0,0);
 }
 
-void Image::AddPixelIndex(QPoint point, QColor color)
+void Image::addPixelIndex(QPoint point, QColor color)
 {
-    pixelsIndex[PointToIndex(point)] = color;
+    pixelsIndex[pointToIndex(point)] = color;
 }
 
-void Image::ClearPixelIndex(QPoint point)
+void Image::clearPixelIndex(QPoint point)
 {
-    pixelsIndex[PointToIndex(point)] = QColor(0,0,0,0);
+    pixelsIndex[pointToIndex(point)] = QColor(0,0,0,0);
 }
 
-void Image::SetSize(int x, int y, int unit){
-    ScreenWidth = x;
-    ScreenHeight = x;
-    UnitSize = unit;
+void Image::setSize(int x, int y, int unit){
+    screenWidth = x;
+    screenHeight = x;
+    unitSize = unit;
 }
 
-int Image::PointToIndex(QPoint point){
+int Image::pointToIndex(QPoint point){
     int xindex = point.x();
     int yindex = point.y();
-    int finalindex = xindex + yindex * (ScreenWidth/UnitSize);
+    int finalindex = xindex + yindex * (screenWidth/unitSize);
     return finalindex;
 }
 
-QPoint Image::IndexToPoint(int index){
-    int xindex = index % (ScreenWidth/UnitSize);
-    int yindex = (index - xindex) / (ScreenWidth/UnitSize);
+QPoint Image::indexToPoint(int index){
+    int xindex = index % (screenWidth/unitSize);
+    int yindex = (index - xindex) / (screenWidth/unitSize);
     QPoint point(xindex, yindex);
     return point;
 }
